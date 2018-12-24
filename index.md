@@ -2,6 +2,7 @@ I'm a software developer and this page is a memorandum of a few of the things I 
 
 # Sofware developer at Animal Logic
 Now famous for the Lego movies franchise. I have the chance to work on the sequel of the Lego Movie. My mission at Animal Logic consists in making and improving existing tools for the Performance team. Basically handling animation, camera, faces. I've been credited in Lego Ninjago Movie.
+{% youtube F5JV3nVOLMA %}
 
 # Sofware developer at Golaem
 Golaem is a provider of solutions for crowd simulations. I started there in 2012. We had less than 10 clients and even less productions released. Nearly 5 years later, I'm very proud of what the team acheived. Close to 200 clients and dozen of released TV serie episods, movies and video games. I had the chance to work on:
@@ -13,6 +14,8 @@ Golaem is a provider of solutions for crowd simulations. I started there in 2012
 - Internal QA toolchain
 - The Cache Layout Tool
 - many more smaller things
+
+{% youtube 1O5ZFB5wyzQ %} {% youtube doHYxLZ96uU %} {% youtube q0xCYm6B9y %}
 
 Last year and a half, I devoted my time to the Cache Layout Tool. It can be described as Photoshop for crowd simulations. You can select, move, delete, change trajectory, duplicate,... characters of the simulation. I designed the architecture and coded most of it. I'm especially proud of this feature because it spawned out as a stand alone product.
 
