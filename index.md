@@ -40,26 +40,25 @@ A while ago I wanted to experiment a couple shader and mix them together. After 
 
 # Demomaker
 I like the constraints brought by 64Kb demos and how to pack a 3minutes tech demo with sound, graphics, code in a single 64Kb executable. I should release demos more often. Check my latest WIP demo called 'Dawn'.
-<iframe width="390" height="220" src="https://www.youtube.com/embed/vc950ULe5Lg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="600" height="330" src="https://www.youtube.com/embed/vc950ULe5Lg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-![Dawn]({{ skaven.fr/images/dawn_shot0.jpg }}/images/dawn_shot0.jpg)
-![Dawn]({{ skaven.fr/images/dawn_shot1.jpg }}/images/dawn_shot1.jpg)
-![Dawn]({{ skaven.fr/images/dawn_shot2.jpg }}/images/dawn_shot2.jpg)
-![Dawn]({{ skaven.fr/images/dawn_shot3.jpg }}/images/dawn_shot3.jpg)
+![Dawn]({{ skaven.fr/images/dawn_shot0.jpg }}/images/dawn_shot0.jpg =390x220)
+![Dawn]({{ skaven.fr/images/dawn_shot1.jpg }}/images/dawn_shot1.jpg =390x220)
+![Dawn]({{ skaven.fr/images/dawn_shot2.jpg }}/images/dawn_shot2.jpg =390x220)
+![Dawn]({{ skaven.fr/images/dawn_shot3.jpg }}/images/dawn_shot3.jpg =390x220)
 
 # Procedural Content researches
 Various attemps at making procedural content in animation and character areas. WIP.
 
-![Proc]({{ skaven.fr/images/ciJbeTu.gif }}/images/ciJbeTu.gif)
-![Proc]({{ skaven.fr/images/mKUHjGW.gif }}/images/mKUHjGW.gif)
-![Proc]({{ skaven.fr/images/4keyaxI.gif }}/images/4keyaxI.gif)
+![Proc]({{ skaven.fr/images/ciJbeTu.gif }}/images/ciJbeTu.gif =390x220)
+![Proc]({{ skaven.fr/images/mKUHjGW.gif }}/images/mKUHjGW.gif =390x220)
+![Proc]({{ skaven.fr/images/4keyaxI.gif }}/images/4keyaxI.gif =390x220)
 
 # .the rush//
-An indie game started as a hobby in 2007 and which finished greenlighted on Steam! It's a futuristic anti-gravity race game featuring 32 tracks made proceduraly. I've spent countless hours making the engine, the procedural content and the gameplay. The game has been presented for 2 years at the Stunfest in Rennes. I did most of the code, design, graphics,.. with the help of some friends. 
+An indie game started as a hobby in 2007 and which finished greenlighted on Steam! It's a futuristic anti-gravity race game featuring 32 tracks made proceduraly. I've spent countless hours making the engine, the procedural content and the gameplay. The game has been presented for 2 years at the Stunfest in Rennes. I did most of the code, design, graphics,.. with the help of some friends.  <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=93538255">Steam page</a>
 <iframe width="390" height="220" src="https://www.youtube.com/embed/IbpPub-0Kt4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 <iframe width="390" height="220" src="https://www.youtube.com/embed/dud64Q3QXYo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-<a href="https://steamcommunity.com/sharedfiles/filedetails/?id=93538255">Steam page</a>
 
 # SuperFluid Shooter
 A small game experiment featuing SPH fluid solver. Heavily inspired by Pixel Junk Shooter by Q-Games. I fell so much in love with the tech described by Jaymin Kessler during GDC10 that I decided to code it myself.
@@ -69,5 +68,5 @@ A small game experiment featuing SPH fluid solver. Heavily inspired by Pixel Jun
 # ImGuizmo
 ImGizmo is a small (.h and .cpp) library built ontop of Dear ImGui that allow you to manipulate(Rotate & translate at the moment) 4x4 float matrices. No other dependancies. Coded with Immediate Mode (IM) philosophy in mind.<a href="https://github.com/CedricGuillemet/ImGuizmo">Fork it on GitHub!</a><br>
 
-![Imguizmo]({{ skaven.fr/images/gizmo_rotate.gif }}/images/gizmo_rotate.gif)
-![Imguizmo]({{ skaven.fr/images/scale.gif }}/images/scale.gif)
+![Imguizmo]({{ skaven.fr/images/gizmo_rotate.gif }}/images/gizmo_rotate.gif =390x220)
+![Imguizmo]({{ skaven.fr/images/scale.gif }}/images/scale.gif =390x220)
