@@ -42,10 +42,10 @@ A while ago I wanted to experiment a couple shader and mix them together. After 
 I like the constraints brought by 64Kb demos and how to pack a 3minutes tech demo with sound, graphics, code in a single 64Kb executable. I should release demos more often. Check my latest WIP demo called 'Dawn'.
 <iframe width="600" height="330" src="https://www.youtube.com/embed/vc950ULe5Lg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-![Dawn]({{ skaven.fr/images/dawn_shot0.jpg }}/images/dawn_shot0.jpg =390x220)
-![Dawn]({{ skaven.fr/images/dawn_shot1.jpg }}/images/dawn_shot1.jpg =390x220)
-![Dawn]({{ skaven.fr/images/dawn_shot2.jpg }}/images/dawn_shot2.jpg =390x220)
-![Dawn]({{ skaven.fr/images/dawn_shot3.jpg }}/images/dawn_shot3.jpg =390x220)
+![Dawn|390x220]({{ skaven.fr/images/dawn_shot0.jpg }}/images/dawn_shot0.jpg)
+![Dawn|390x220]({{ skaven.fr/images/dawn_shot1.jpg }}/images/dawn_shot1.jpg)
+![Dawn|390x220]({{ skaven.fr/images/dawn_shot2.jpg }}/images/dawn_shot2.jpg)
+![Dawn|390x220]({{ skaven.fr/images/dawn_shot3.jpg }}/images/dawn_shot3.jpg)
 
 # Procedural Content researches
 Various attemps at making procedural content in animation and character areas. WIP.
