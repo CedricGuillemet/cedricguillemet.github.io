@@ -27,3 +27,47 @@ Last year and a half, I devoted my time to the Cache Layout Tool. It can be desc
 
 # Game developer
 I've been a game developer for some years(2005-2007) at Fresh3D. I had the chance to release my first game on PlayStation2 : Mountain Bike Adrenaline. It didn't have a good Metacritic but I enjoyed coding all the terrain pipeline from scratch. I also started the PC DX9 conversion but left the company before its release. During those years I also had the chance to put my hands on a PlayStation 3 devkit. We were funded by Sony for an unreleased prototype called 'Strings Attached'. I worked on rendering tech(AO, shadows, SPU skinning). Some bits on audio, lua scripting,..
+<iframe width="390" height="220" src="https://www.youtube.com/embed/khI9P1oDG8k" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="390" height="220" src="https://www.youtube.com/embed/lpTMc6PgsRU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Personal projects
+# Imogen
+A while ago I wanted to experiment a couple shader and mix them together. After a couple hours I ended up having a basic node graph editor and a property editor.
+<a href="https://github.com/CedricGuillemet/Imogen">I keep adding features. Check the Github page for more infos</a>
+
+![Imogen 0.4]({{ skaven.fr/images/Imogen-0.4.0.png }}/images/Imogen-0.4.0.png)
+![Imogen 0.4]({{ skaven.fr/images/Imogen-0.4.0_2.png }}/images/Imogen-0.4.0_2.png)
+
+# Demomaker
+I like the constraints brought by 64Kb demos and how to pack a 3minutes tech demo with sound, graphics, code in a single 64Kb executable. I should release demos more often. Check my latest WIP demo called 'Dawn'.
+<iframe width="390" height="220" src="https://www.youtube.com/embed/vc950ULe5Lg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+![Dawn]({{ skaven.fr/images/dawn_shot0.jpg }}/images/dawn_shot0.jpg)
+![Dawn]({{ skaven.fr/images/dawn_shot1.jpg }}/images/dawn_shot1.jpg)
+![Dawn]({{ skaven.fr/images/dawn_shot2.jpg }}/images/dawn_shot2.jpg)
+![Dawn]({{ skaven.fr/images/dawn_shot3.jpg }}/images/dawn_shot3.jpg)
+
+# Procedural Content researches
+Various attemps at making procedural content in animation and character areas. WIP.
+
+![Proc]({{ skaven.fr/images/ciJbeTu.gif }}/images/ciJbeTu.gif)
+![Proc]({{ skaven.fr/images/mKUHjGW.gif }}/images/mKUHjGW.gif)
+![Proc]({{ skaven.fr/images/4keyaxI.gif }}/images/4keyaxI.gif)
+
+# .the rush//
+An indie game started as a hobby in 2007 and which finished greenlighted on Steam! It's a futuristic anti-gravity race game featuring 32 tracks made proceduraly. I've spent countless hours making the engine, the procedural content and the gameplay. The game has been presented for 2 years at the Stunfest in Rennes. I did most of the code, design, graphics,.. with the help of some friends. 
+<iframe width="390" height="220" src="https://www.youtube.com/embed/IbpPub-0Kt4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="390" height="220" src="https://www.youtube.com/embed/dud64Q3QXYo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<a href="https://steamcommunity.com/sharedfiles/filedetails/?id=93538255">Steam page</a>
+
+# SuperFluid Shooter
+A small game experiment featuing SPH fluid solver. Heavily inspired by Pixel Junk Shooter by Q-Games. I fell so much in love with the tech described by Jaymin Kessler during GDC10 that I decided to code it myself.
+<iframe width="390" height="220" src="https://www.youtube.com/embed/1PFjS3RnSM0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="390" height="220" src="https://www.youtube.com/embed/QMm06SqJQHs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+# ImGuizmo
+ImGizmo is a small (.h and .cpp) library built ontop of Dear ImGui that allow you to manipulate(Rotate & translate at the moment) 4x4 float matrices. No other dependancies. Coded with Immediate Mode (IM) philosophy in mind.<a href="https://github.com/CedricGuillemet/ImGuizmo">Fork it on GitHub!</a><br>
+
+![Imguizmo]({{ skaven.fr/images/gizmo_rotate.gif }}/images/gizmo_rotate.gif)
+![Imguizmo]({{ skaven.fr/images/scale.gif }}/images/scale.gif)
