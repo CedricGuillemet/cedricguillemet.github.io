@@ -35,8 +35,8 @@ I've been a game developer for some years(2005-2007) at Fresh3D. I had the chanc
 A while ago I wanted to experiment a couple shader and mix them together. After a couple hours I ended up having a basic node graph editor and a property editor.
 <a href="https://github.com/CedricGuillemet/Imogen">I keep adding features. Check the Github page for more infos</a>
 
-![Imogen 0.4]({{ skaven.fr/images/Imogen-0.4.0.png }}/images/Imogen-0.4.0.png)
-![Imogen 0.4]({{ skaven.fr/images/Imogen-0.4.0_2.png }}/images/Imogen-0.4.0_2.png)
+![Imogen 0.4]({{ skaven.fr/images/Imogen-0.4.0.png }}/images/Imogen-0.4.0.png =390x220)
+![Imogen 0.4]({{ skaven.fr/images/Imogen-0.4.0_2.png }}/images/Imogen-0.4.0_2.png =390x220)
 
 # Demomaker
 I like the constraints brought by 64Kb demos and how to pack a 3minutes tech demo with sound, graphics, code in a single 64Kb executable. I should release demos more often. Check my latest WIP demo called 'Dawn'.
