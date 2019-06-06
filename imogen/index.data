@@ -2267,8 +2267,8 @@ float hash(vec2 p)  // replace this by something better
 
 vec3 normal_from_depth(float depth, vec2 texcoords) {
   
-  const vec2 offset1 = dFdy(vUV);
-  const vec2 offset2 = dFdx(vUV);
+  vec2 offset1 = dFdy(vUV);
+  vec2 offset2 = dFdx(vUV);
   
   float depth1 = texture(Sampler0, texcoords + offset1).x;
   float depth2 = texture(Sampler0, texcoords + offset2).x;
@@ -2286,9 +2286,9 @@ float AO()
 {
 	// constants
 
-	const int samples = 48;
+	int samples = 48;
   
-	const vec3 sample_sphere[48]=vec3[48](
+	vec3 sample_sphere[48]=vec3[48](
 	vec3( 0.5381, 0.1856,-0.4319), vec3( 0.1379, 0.2486, 0.4430),
 	vec3( 0.3371, 0.5679,-0.0057), vec3(-0.6999,-0.0451,-0.0019),
 	vec3( 0.0689,-0.1598,-0.8547), vec3( 0.0560, 0.0069,-0.1843),
@@ -2339,7 +2339,7 @@ float AO()
 	}
   
   
-	float ao = 1.0 - AOParam.total_strength * occlusion * (1.0 / samples);
+	float ao = 1.0 - AOParam.total_strength * occlusion * (1.0 / float(samples));
 	
 	//return vec4(clipSpaceNormal*0.5+0.5, 1.0);
 	return ao;
@@ -2476,9 +2476,15 @@ float Checker()
 {
 	vec2 nuv = vUV - vec2(0.5);
     return mod(floor(nuv.x)+floor(nuv.y),2.0);
-}vec4 Circle()
+}layout (std140) uniform CircleBlock 
+{ 
+	float radius; 
+	float t; 
+};
+
+vec4 Circle()
 {
-    return vec4(1.0,0.0,1.0,1.0);
+    return vec4(Circle(vUV, radius, t));
 }
 layout (std140) uniform CircleSplatterBlock
 {
@@ -2717,7 +2723,7 @@ vec3 prefilterEnvMap(vec3 R, float roughness)
 {
 	vec3 N = R;
 	vec3 V = R;
-	uint numSamples = CubeRadianceParam.sampleCount;
+	uint numSamples = uint(CubeRadianceParam.sampleCount);
 	vec3 color = vec3(0.0);
 	float totalWeight = float(numSamples);
 	float envMapDim = float(textureSize(CubeSampler0, EvaluationParam.mipmapNumber).s);
@@ -2726,7 +2732,7 @@ vec3 prefilterEnvMap(vec3 R, float roughness)
 		vec3 H = importanceSample_GGX(Xi, roughness, N);
 		vec3 L = 2.0 * dot(V, H) * H - V;
 		
-		color += textureLod(CubeSampler0, L, 0).rgb;// * dotNL;
+		color += textureLod(CubeSampler0, L, 0.).rgb;// * dotNL;
 		/*
 		float dotNL = clamp(dot(N, L), 0.0, 1.0);
 		if(dotNL > 0.0) 
@@ -2796,8 +2802,8 @@ vec4 taylorInvSqrt(vec4 r){
 }
 
 float simplex(vec3 v){
-  const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;
-  const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
+  vec2  C = vec2(1.0/6.0, 1.0/3.0) ;
+  vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
 
   vec3 i  = floor(v + dot(v, C.yyy) );
   vec3 x0 =   v - i + dot(i, C.xxx) ;
@@ -2876,7 +2882,7 @@ vec3 snoiseVec3( vec3 x ){
 
 vec3 curlNoise(vec3 p)
 {
-    const float e = .1;
+  float e = .1;
   vec3 dx = vec3( e   , 0.0 , 0.0 );
   vec3 dy = vec3( 0.0 , e   , 0.0 );
   vec3 dz = vec3( 0.0 , 0.0 , e   );
@@ -2905,7 +2911,7 @@ vec4 Disolve()
     
     // noise seed
     vec3 v = vec3(uv, float(EvaluationParam.passNumber)*0.05);
-    const float disp_freq = Frequency; // param
+    float disp_freq = Frequency; // param
     v.xy *= disp_freq;
     // get first some density variation
     vec4 disp = 0.5*mix(vec4(0), pow(0.5+0.5*vec4(fbm3(-2.0*v+11.2)), vec4(2)), 0.05);
@@ -2941,13 +2947,13 @@ layout (std140) uniform DistanceBlock
 
 vec4 Pack(vec4 coord)
 {
-    float s = textureSize(Sampler0, 0).x;
+    float s = float(textureSize(Sampler0, 0).x);
     return coord / s;
 }
 
 vec4 Unpack(vec4 v)
 {
-    float s = textureSize(Sampler0, 0).x;
+    float s = float(textureSize(Sampler0, 0).x);
     return v * s;
 }
 
@@ -2964,7 +2970,7 @@ vec4 StepJFA (in vec2 fragCoord, in float level, float c_maxSteps)
         for (int x = -1; x <= 1; ++x) {
             vec2 sampleCoord = fragCoord + vec2(x,y) * stepwidth;
             
-            vec4 data = texture(Sampler0, sampleCoord / textureSize(Sampler0, 0).xy);
+            vec4 data = texture(Sampler0, sampleCoord / vec2(textureSize(Sampler0, 0).xy));
             vec4 seedCoord = Unpack(data);
             
             float dist = length(seedCoord.xy - fragCoord);
@@ -3221,8 +3227,8 @@ vec4 Kaleidoscope()
 float castRay( vec3 ro, vec3 rd )
 {
     float delt = 0.01f;
-    const float mint = 0.001f;
-    const float maxt = 10.0f;
+    float mint = 0.001f;
+    float maxt = 10.0f;
     float lh = 0.0f;
     float ly = 0.0f;
     for( float t = mint; t < maxt; t += delt )
@@ -3240,7 +3246,7 @@ float castRay( vec3 ro, vec3 rd )
         lh = h;
         ly = p.y;
     }
-    return 999;
+    return 999.;
 }
 
 layout (std140) uniform LambertMaterialBlock
@@ -3618,20 +3624,83 @@ vec4 Paint3D()
 
 float find_closest(int x, int y, float c0)
 {
-	int dither[8][8] = {
-		{ 0, 32, 8, 40, 2, 34, 10, 42}, /* 8x8 Bayer ordered dithering */
-		{48, 16, 56, 24, 50, 18, 58, 26}, /* pattern. Each input pixel */
-		{12, 44, 4, 36, 14, 46, 6, 38}, /* is scaled to the 0..63 range */
-		{60, 28, 52, 20, 62, 30, 54, 22}, /* before looking in this table */
-		{ 3, 35, 11, 43, 1, 33, 9, 41}, /* to determine the action. */
-		{51, 19, 59, 27, 49, 17, 57, 25},
-		{15, 47, 7, 39, 13, 45, 5, 37},
-		{63, 31, 55, 23, 61, 29, 53, 21} }; 
+	int dither[64];
+	
+	dither[0] = 0; 
+	dither[1] = 32; 
+	dither[2] = 8; 
+	dither[3] = 40; 
+	dither[4] = 2; 
+	dither[5] = 34; 
+	dither[6] = 10; 
+	dither[7] = 42;
+	dither[8] = 48; 
+	dither[9] = 16; 
+	
+	dither[10] = 56; 
+	dither[11] = 24; 
+	dither[12] = 50; 
+	dither[13] = 18; 
+	dither[14] = 58; 
+	dither[15] = 26;
+	dither[16] = 12; 
+	dither[17] = 44; 
+	dither[18] = 4; 
+	dither[19] = 36; 
 
+	dither[20] = 14; 
+	dither[21] = 46; 
+	dither[22] = 6; 
+	dither[23] = 38; 
+	dither[24] = 60; 
+	dither[25] = 28; 
+	dither[26] = 52; 
+	dither[27] = 20; 
+	dither[28] = 62; 
+	dither[29] = 30; 
+
+	dither[30] = 54; 
+	dither[31] = 22;
+	dither[32] = 3; 
+	dither[33] = 35; 
+	dither[34] = 11; 
+	dither[35] = 43; 
+	dither[36] = 1; 
+	dither[37] = 33; 
+	dither[38] = 9; 
+	dither[39] = 41;
+
+	dither[40] = 51; 
+	dither[41] = 19; 
+	dither[42] = 59; 
+	dither[43] = 27; 
+	dither[44] = 49; 
+	dither[45] = 17; 
+	dither[46] = 57; 
+	dither[47] = 25;
+	dither[48] = 15; 
+	dither[49] = 47; 
+
+	dither[50] = 7; 
+	dither[51] = 39; 
+	dither[52] = 13; 
+	dither[53] = 45; 
+	dither[54] = 5; 
+	dither[55] = 37;
+	dither[56] = 63; 
+	dither[57] = 31; 
+	dither[58] = 55; 
+	dither[59] = 23; 
+
+	dither[60] = 61; 
+	dither[61] = 29; 
+	dither[62] = 53; 
+	dither[63] = 21;
+	
 	float limit = 0.0;
 	if(x < 8)
 	{
-		limit = (dither[x][y]+1)/64.0;
+		limit = float(dither[x*8+y]+1)/64.0;
 	}
 
 	if(c0 < limit)
@@ -3806,8 +3875,8 @@ vec4 Palette()
 
 	vec3 rgb = color.rgb;
 	vec2 xy = gl_FragCoord.xy;
-	int x = int(mod(xy.x, 8));
-	int y = int(mod(xy.y, 8));
+	int x = int(mod(xy.x, 8.));
+	int y = int(mod(xy.y, 8.));
 
 	vec3 ditheredRGB;
 	ditheredRGB.r = find_closest(x, y, rgb.r);
@@ -3889,8 +3958,8 @@ vec3 FresnelTerm( vec3 specularColor, float vdoth )
 
 vec3 EnvBRDFApprox( vec3 specularColor, float roughness, float ndotv )
 {
-    const vec4 c0 = vec4( -1, -0.0275, -0.572, 0.022 );
-    const vec4 c1 = vec4( 1, 0.0425, 1.04, -0.04 );
+    vec4 c0 = vec4( -1, -0.0275, -0.572, 0.022 );
+    vec4 c1 = vec4( 1, 0.0425, 1.04, -0.04 );
     vec4 r = roughness * c0 + c1;
     float a004 = min( r.x * r.x, exp2( -9.28 * ndotv ) ) * r.x + r.y;
     vec2 AB = vec2( -1.04, 1.04 ) * a004 + r.zw;
@@ -3964,7 +4033,7 @@ float Scene( vec3 p, mat3 localToWorld )
 
 float CastRay( in vec3 ro, in vec3 rd, mat3 localToWorld )
 {
-    const float maxd = 5.0;
+    float maxd = 5.0;
     
 	float h = 0.5;
     float t = 0.0;
@@ -4148,8 +4217,8 @@ vec3 FresnelTerm( vec3 specularColor, float vdoth )
 
 vec3 EnvBRDFApprox( vec3 specularColor, float roughness, float ndotv )
 {
-    const vec4 c0 = vec4( -1, -0.0275, -0.572, 0.022 );
-    const vec4 c1 = vec4( 1, 0.0425, 1.04, -0.04 );
+    vec4 c0 = vec4( -1, -0.0275, -0.572, 0.022 );
+    vec4 c1 = vec4( 1, 0.0425, 1.04, -0.04 );
     vec4 r = roughness * c0 + c1;
     float a004 = min( r.x * r.x, exp2( -9.28 * ndotv ) ) * r.x + r.y;
     vec2 AB = vec2( -1.04, 1.04 ) * a004 + r.zw;
@@ -4228,7 +4297,7 @@ float Scene( vec3 p, mat3 localToWorld )
 
 float CastRay( in vec3 ro, in vec3 rd, mat3 localToWorld )
 {
-    const float maxd = 5.0;
+    float maxd = 5.0;
     
 	float h = 0.5;
     float t = 0.0;
@@ -4625,17 +4694,17 @@ vec4 PolarCoords()
 	vec2 uv;
 	if (PolarCoordsParam.op == 1)
 	{
-		uv.x = cos(uvin.x * PI * 2 + PI / 2) * (1 - (uvin.y + 0.5)) / 2 + 0.5;
-		uv.y = sin(uvin.x * PI * 2 + PI / 2) * (1 - (uvin.y + 0.5)) / 2 + 0.5;
+		uv.x = cos(uvin.x * PI * 2. + PI / 2.) * (1. - (uvin.y + 0.5)) / 2. + 0.5;
+		uv.y = sin(uvin.x * PI * 2. + PI / 2.) * (1. - (uvin.y + 0.5)) / 2. + 0.5;
 	}
 	else
 	{
 		uv.x = atan(uvin.y, uvin.x);
-		uv.x += PI / 2;
-		if (uv.x < 0)
-			uv.x += PI * 2;
-		uv.x /= PI * 2;
-		uv.y = 1 - length(uvin) * 2;
+		uv.x += PI / 2.;
+		if (uv.x < 0.)
+			uv.x += PI * 2.;
+		uv.x /= PI * 2.;
+		uv.y = 1. - length(uvin) * 2.;
 	}
 	vec4 tex = texture(Sampler0, uv);
 
@@ -4666,7 +4735,7 @@ layout (std140) uniform RampBlock
 vec4 Ramp()
 {
 	vec4 tex = texture(Sampler0, vUV);
-	if (EvaluationParam.inputIndices[0].y > -1.)
+	if (EvaluationParam.inputIndices[0].y > -1)
 		return texture(Sampler1, vec2(tex.x, 0.5));
 	else
 		return tex * GetRamp(tex.x, RampParam.ramp);
@@ -4697,18 +4766,18 @@ float f(float i)
 
 #define F(i) (f(i))
 
-#define GH(i) T(i, 0)*F(float(i))
-#define GV(i) T(0, i)*F(float(i))
+#define GH(i) T(float(i), 0.)*F(float(i))
+#define GV(i) T(0., float(i))*F(float(i))
 #define BLURH (GH(-4) + GH(-3) + GH(-2) + GH(-1) + GH(0) + GH(1) + GH(2) + GH(3) + GH(4))
 #define BLURV (GV(-4) + GV(-3) + GV(-2) + GV(-1) + GV(0) + GV(1) + GV(2) + GV(3) + GV(4))
 
 vec4 pass(vec2 uv)
 {
-	vec4 col = T(-1, -1)*0.05 + T( 0, -1)*0.20 + T( 1, -1)*0.05 +
-               T(-1,  0)*0.20 - T( 0,  0)*1.00 + T( 1,  0)*0.20 +
-               T(-1,  1)*0.05 + T( 0,  1)*0.20 + T( 1,  1)*0.05;
+	vec4 col = T(-1., -1.)*0.05 + T( 0., -1.)*0.20 + T( 1., -1.)*0.05 +
+               T(-1.,  0.)*0.20 - T( 0.,  0.)*1.00 + T( 1.,  0.)*0.20 +
+               T(-1.,  1.)*0.05 + T( 0.,  1.)*0.20 + T( 1.,  1.)*0.05;
     col /= 8.0;
-    col = T(0, 0) - col*50.0;
+    col = T(0., 0.) - col*50.0;
     col -= 0.5;
     col = col*boost;
     col = smoothstep(vec4(-0.5), vec4(0.5), col);
@@ -4733,30 +4802,65 @@ vec4 ReactionDiffusion()
 	}
 	return pass(vUV);
 }
-
 #define PI 3.14159265359
 #define SQRT2 1.414213562373095
 
-#define TwoPI (PI*2)
+#define TwoPI (PI*2.0)
+
+
+layout (std140) uniform EvaluationBlock
+{
+	mat4 viewRot;
+	mat4 viewProjection;
+	mat4 viewInverse;
+	mat4 model;
+	mat4 modelViewProjection;
+	vec4 viewport;
+	
+	int targetIndex;
+	int forcedDirty;
+	int	uiPass;
+	int passNumber;
+	
+	vec4 mouse; // x,y, lbut down, rbut down
+	ivec4 keyModifier; // ctrl, alt, shift
+	ivec4 inputIndices[2];
+	
+	int frame;
+	int localFrame;
+	int mVertexSpace;
+	int dirtyFlag;
+	
+    int mipmapNumber;
+    int mipmapCount;
+} EvaluationParam;
 
 #ifdef VERTEX_SHADER
 
-attribute vec2 inUV;
-attribute vec4 inColor;
-attribute vec3 inPosition;
-attribute vec3 inNormal;
-varying vec2 vUV;
-varying vec3 vWorldPosition;
-varying vec3 vWorldNormal;
-varying vec4 vColor;
+layout(location = 0)in vec2 inUV;
+layout(location = 1)in vec4 inColor;
+layout(location = 2)in vec3 inPosition;
+layout(location = 3)in vec3 inNormal;
 
+out vec2 vUV;
+out vec3 vWorldPosition;
+out vec3 vWorldNormal;
+out vec4 vColor;
 void main()
 {
+	if (EvaluationParam.mVertexSpace == 1)
+    {
+		gl_Position = EvaluationParam.modelViewProjection * vec4(inPosition.xyz, 1.0);
+	}
+	else
+	{
+		gl_Position = vec4(inUV.xy*2.0-1.0,0.5,1.0); 
+	}
+	
 	vUV = inUV;
 	vColor = inColor;
-	gl_Position = vec4(inUV.xy*2.0-1.0,0.5,1.0); 
-	vWorldPosition = vec3(0.,0.,0.);
-	vWorldNormal = vec3(0.,0.,0.);
+	vWorldNormal = (EvaluationParam.model * vec4(inNormal, 0.0)).xyz;
+	vWorldPosition = (EvaluationParam.model * vec4(inPosition, 1.0)).xyz;
 }
 
 #endif
@@ -4764,10 +4868,242 @@ void main()
 
 #ifdef FRAGMENT_SHADER
 
-varying vec2 vUV;
-varying vec3 vWorldPosition;
-varying vec3 vWorldNormal;
-varying vec4 vColor;
+struct Camera
+{
+	vec4 pos;
+	vec4 dir;
+	vec4 up;
+	vec4 lens;
+};
+
+layout(location=0) out vec4 outPixDiffuse;
+in vec2 vUV;
+in vec3 vWorldPosition;
+in vec3 vWorldNormal;
+in vec4 vColor;
+
+uniform sampler2D Sampler0;
+uniform sampler2D Sampler1;
+uniform sampler2D Sampler2;
+uniform sampler2D Sampler3;
+uniform sampler2D Sampler4;
+uniform sampler2D Sampler5;
+uniform sampler2D Sampler6;
+uniform sampler2D Sampler7;
+uniform samplerCube CubeSampler0;
+uniform samplerCube CubeSampler1;
+uniform samplerCube CubeSampler2;
+uniform samplerCube CubeSampler3;
+uniform samplerCube CubeSampler4;
+uniform samplerCube CubeSampler5;
+uniform samplerCube CubeSampler6;
+uniform samplerCube CubeSampler7;
+
+vec2 Rotate2D(vec2 v, float a) 
+{
+	float s = sin(a);
+	float c = cos(a);
+	mat2 m = mat2(c, -s, s, c);
+	return m * v;
+}
+vec3 InvertCubeY(vec3 dir)
+{
+	return vec3(dir.x, -dir.y, dir.z);
+}
+float Circle(vec2 uv, float radius, float t)
+{
+    float r = length(uv-vec2(0.5));
+    float h = sin(acos(r/radius));
+    return mix(1.0-smoothstep(radius-0.001, radius, length(uv-vec2(0.5))), h, t);
+}
+
+vec4 boxmap( sampler2D sam, in vec3 p, in vec3 n, in float k )
+{
+    vec3 m = pow( abs(n), vec3(k) );
+	vec4 x = texture( sam, p.yz );
+	vec4 y = texture( sam, p.zx );
+	vec4 z = texture( sam, p.xy );
+	return (x*m.x + y*m.y + z*m.z)/(m.x+m.y+m.z);
+}
+
+vec2 boxUV(vec3 p, vec3 n)
+{
+	vec2 uv = p.xy;
+	uv = mix(uv, p.zy*sign(n.x), (abs(n.x)>0.5)?1.0:0.0 );
+	uv = mix(uv, p.zx*sign(n.y), (abs(n.y)>0.5)?1.0:0.0 );
+	return uv;
+}
+
+vec2 envMapEquirect(vec3 wcNormal, float flipEnvMap) {
+  //I assume envMap texture has been flipped the WebGL way (pixel 0,0 is a the bottom)
+  //therefore we flip wcNorma.y as acos(1) = 0
+  float phi = acos(-wcNormal.y);
+  float theta = atan(flipEnvMap * wcNormal.x, wcNormal.z) + PI;
+  return vec2(theta / TwoPI, 1.0 - phi / PI);
+}
+
+vec2 envMapEquirect(vec3 wcNormal) {
+    //-1.0 for left handed coordinate system oriented texture (usual case)
+    return envMapEquirect(wcNormal, -1.0);
+}
+
+float saturate( float x )
+{
+    return clamp( x, 0., 1. );
+}
+
+vec3 saturate( vec3 x )
+{
+    return clamp( x, vec3( 0. ), vec3( 1. ) );
+}
+
+float Smooth( float x )
+{
+	return smoothstep( 0., 1., saturate( x ) );   
+}
+
+// distance functions
+
+float Cylinder( vec3 p, float r, float height ) 
+{
+	float d = length( p.xz ) - r;
+	d = max( d, abs( p.y ) - height );
+	return d;
+}
+
+float Substract( float a, float b )
+{
+    return max( a, -b );
+}
+
+float SubstractRound( float a, float b, float r ) 
+{
+	vec2 u = max( vec2( r + a, r - b ), vec2( 0.0, 0.0 ) );
+	return min( -r, max( a, -b ) ) + length( u );
+}
+
+float Union( float a, float b )
+{
+    return min( a, b );
+}
+
+float Box( vec3 p, vec3 b )
+{
+	vec3 d = abs( p ) - b;
+	return min( max( d.x, max( d.y, d.z ) ), 0.0 ) + length( max( d, 0.0 ) );
+}
+
+float Sphere( vec3 p, float s )
+{
+	return length( p ) - s;
+}
+
+float Torus( vec3 p, float sr, float lr )
+{
+	return length( vec2( length( p.xz ) - lr, p.y ) ) - sr;
+}
+
+float Disc( vec3 p, float r, float t ) 
+{
+	float l = length( p.xz ) - r;
+	return l < 0. ? abs( p.y ) - t : length( vec2( p.y, l ) ) - t;
+}
+
+float UnionRound( float a, float b, float k )
+{
+    float h = clamp( 0.5 + 0.5 * ( b - a ) / k, 0.0, 1.0 );
+    return mix( b, a, h ) - k * h * ( 1.0 - h );
+}
+
+float sdRoundBox( vec3 p, vec3 b, float r )
+{
+  vec3 d = abs(p) - b;
+  return length(max(d,0.0)) - r
+         + min(max(d.x,max(d.y,d.z)),0.0); // remove this line for an only partially signed sdf 
+}
+
+mat3 cotangent_frame( vec3 N, vec3 p, vec2 uv )
+{
+    // get edge vectors of the pixel triangle
+    vec3 dp1 = dFdx( p );
+    vec3 dp2 = dFdy( p );
+    vec2 duv1 = dFdx( uv );
+    vec2 duv2 = dFdy( uv );
+
+    // solve the linear system
+    vec3 dp2perp = cross( dp2, N );
+    vec3 dp1perp = cross( N, dp1 );
+    vec3 T = dp2perp * duv1.x + dp1perp * duv2.x;
+    vec3 B = dp2perp * duv1.y + dp1perp * duv2.y;
+
+    // construct a scale-invariant frame 
+    float invmax = inversesqrt( max( dot(T,T), dot(B,B) ) );
+    return mat3( T * invmax, B * invmax, N );
+}
+
+float GetHeight(sampler2D heightSampler, vec2 texCoords)
+{
+    return texture(heightSampler, texCoords).r;
+}
+
+//Parallax Occlusion Mapping from: https://learnopengl.com/Advanced-Lighting/Parallax-Mapping
+vec2 ParallaxMapping(sampler2D heightSampler, vec2 texCoords, vec3 viewDir, float depthFactor)
+{ 
+    float height_scale = depthFactor;
+    // number of depth layers
+    float minLayers = 8.0;
+    float maxLayers = 32.0;
+    float numLayers = mix(maxLayers, minLayers, min(abs(viewDir.z), 1.0));  
+    // calculate the size of each layer
+    float layerDepth = 1.0 / numLayers;
+    // depth of current layer
+    float currentLayerDepth = 0.0;
+    // the amount to shift the texture coordinates per layer (from vector P)
+    vec2 P = viewDir.xy * height_scale; 
+    vec2 deltaTexCoords = P / numLayers; 
+
+    // get initial values
+    vec2  currentTexCoords     = texCoords;
+    float currentDepthMapValue = GetHeight(heightSampler, currentTexCoords);
+  
+    while(currentLayerDepth < currentDepthMapValue)
+    {
+        // shift texture coordinates along direction of P
+        currentTexCoords -= deltaTexCoords;
+        // get depthmap value at current texture coordinates
+        currentDepthMapValue = GetHeight(heightSampler, currentTexCoords);  
+        // get depth of next layer
+        currentLayerDepth += layerDepth;  
+    }
+
+    // get texture coordinates before collision (reverse operations)
+    vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+    // get depth after and before collision for linear interpolation
+    float afterDepth  = currentDepthMapValue - currentLayerDepth;
+    float beforeDepth = GetHeight(heightSampler, prevTexCoords) + layerDepth - currentLayerDepth;
+ 
+    // interpolation of texture coordinates
+    float weight = afterDepth / (afterDepth - beforeDepth);
+    vec2 finalTexCoords = mix(currentTexCoords, prevTexCoords, weight);
+
+    return finalTexCoords;  
+} 
+
+vec4 cubemap2D( sampler2D sam, in vec3 d )
+{
+    vec3 n = abs(d);
+    vec3 s = dFdx(d);
+    vec3 t = dFdy(d);
+         if(n.x>n.y && n.x>n.z) {d=d.xyz;s=s.xyz;t=t.xyz;}
+    else if(n.y>n.x && n.y>n.z) {d=d.yzx;s=s.yzx;t=t.yzx;}
+    else                        {d=d.zxy;s=s.zxy;t=t.zxy;}
+    vec2 q = d.yz/d.x;
+    return textureGrad( sam, 
+                        0.5*q + 0.5,
+                        0.5*(s.yz-q*s.x)/d.x,
+                        0.5*(t.yz-q*t.x)/d.x );
+}
 
 
 __NODE__
@@ -4776,8 +5112,7 @@ __NODE__
 
 void main() 
 { 
-	//outPixDiffuse = vec4(__FUNCTION__);
-	gl_FragColor = vec4(__FUNCTION__);
+	outPixDiffuse = vec4(__FUNCTION__);
 }
 
 #endif
@@ -4829,7 +5164,7 @@ vec4 Swirl()
 	return tex;
 }
 
-const float maxd = 5.0;
+float maxd = 5.0;
 
 float scene(vec3 p)
 {
@@ -4866,14 +5201,14 @@ float castRay(vec3 ro, vec3 rd)
 	float resT;
 	
     float delt = 0.01f;
-    const float mint = 0.001f;
-    const float maxt = 4.0f;
+    float mint = 0.001f;
+    float maxt = 4.0f;
     float lh = 0.0f;
     float ly = 0.0f;
     for( float t = mint; t < maxt; t += delt )
     {
-        const vec3  p = ro + rd*t;
-        const float h = terrain( p.xz );
+        vec3  p = ro + rd*t;
+        float h = terrain( p.xz );
         if( p.y < h )
         {
             // interpolate the intersection distance
@@ -4916,7 +5251,7 @@ vec4 TerrainPreview()
 	if (d<maxd)
 	{
 		vec3 pos = ro + rd * d;
-		if (pos.x>=0 && pos.z>=0 && pos.x<=1.0 && pos.z <= 1.0)
+		if (pos.x>=0. && pos.z>=0. && pos.x<=1.0 && pos.z <= 1.0)
 			col = texture(Sampler1, pos.xz).xyz;
 	}
 	
@@ -4961,7 +5296,7 @@ vec4 GetTile(vec2 uv)
 			vec2 cell1 = (floor(uv/cellSize) + vec2(float(x), float(y)));
 			vec2 ofs = GetOffset(cell1);
 			vec4 multiplier = vec4(1.0);
-			if (EvaluationParam.inputIndices[0].y > -1.)
+			if (EvaluationParam.inputIndices[0].y > -1)
 			{
 				vec2 uvMul = (floor(uv + ofs) + vec2(0.5))/ TileParam.scale - (ofs*vec2(0.5))/ TileParam.scale;
 				//return vec4(uvMul, 0., 1.); // debug!
@@ -25450,4 +25785,157 @@ dÀ]ÀÂí?FoðWz Qù 8ö¸D:É™€Z4âŠü!šøI	hÎ
       MADDû  ²                         ­¬,?¬«+?¬«+?  €?v%?Þ#?Þ#?  €?        è     	   NormalMap™                            ðA           è        Blur3                              o;                è        BlurÍ  '                        ØÉ?o;                è        Color¾  ð            €?  €?  €?  €?        è  5      PBR2\                                                          Ô>*nÜ>š™?        è  !      NGon8  Ü             š™™>            è     	   Transformô                          ìù?k¿  €?  €?            è                                                        	     
         	                                              è      ÿÿÿÿ   ..alu   6      ChannelPackera  Œ                                                                                              è         Circle­  Œ            €>            è        Checker­                                   è        Color­  ¤           €?Xÿ?Xÿ?            è  -      Voronoi­  0         
      0A                è        PerlinNoiseW  Ï              €?  €?        è                                                      è      ÿÿÿÿ   Name_Of_New_Material      	   ImageRead
-  i         C:\Users\cedri\dev\Imogen\bin\Media\Pictures\PartyCat.jpg                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               è  7      Lensæ  “                        ÍÌÌ>  €?        è                              è      ÿÿÿÿ
+  i         C:\Users\cedri\dev\Imogen\bin\Media\Pictures\PartyCat.jpg                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               è  7      Lensæ  “                        ÍÌÌ>  €?        è                              è      ÿÿÿÿ[Imogen][Imogen]
+ShowTimeline=0
+ShowLibrary=1
+ShowNodes=1
+ShowLog=1
+ShowParameters=1
+ShowMouseState=0
+LibraryViewMode=1
+Layout=0xffff0fe0
+PlayPause=0xffffff3e
+AnimationFirstFrame=0xffffff19
+AnimationNextFrame=0xffffff11
+AnimationPreviousFrame=0xffffff05
+MaterialExport=0xffff08e0
+MaterialImport=0xffff0ce0
+ToggleLibrary=0xffff1ee0
+ToggleNodeGraph=0xffff1fe0
+ToggleLogger=0xffff20e0
+ToggleSequencer=0xffff21e0
+ToggleParameters=0xffff22e0
+MaterialNew=0xffff11e0
+ReloadShaders=0xffffff40
+DeleteSelectedNodes=0xffffff4c
+AnimationSetKey=0xffffff16
+HotKeyEditor=0xffff0ee0
+NewNodePopup=0xffffff2b
+Undo=0xffff1de0
+Redo=0xff1de1e0
+Copy=0xffff06e0
+Cut=0xffff1be0
+Paste=0xffff19e0
+BuildMaterial=0xffff05e0
+MouseState=0xffff10e0
+[Window][Imogen]
+Pos=0,32
+Size=1920,985
+Collapsed=0
+
+[Window][Debug##Default]
+Pos=60,60
+Size=400,400
+Collapsed=0
+
+[Window][Nodes]
+Pos=672,40
+Size=1240,659
+Collapsed=0
+DockId=0x00000005,0
+
+[Window][Shaders]
+Pos=1439,40
+Size=473,659
+Collapsed=0
+DockId=0x00000005,0
+
+[Window][Library]
+Pos=8,40
+Size=276,969
+Collapsed=0
+DockId=0x00000002,0
+
+[Window][Parameters]
+Pos=286,40
+Size=384,659
+Collapsed=0
+DockId=0x0000000B,0
+
+[Window][Logs]
+Pos=286,701
+Size=1626,308
+Collapsed=0
+DockId=0x00000001,0
+
+[Window][Timeline]
+Pos=346,701
+Size=1566,308
+Collapsed=0
+DockId=0x00000001,1
+
+[Window][Pins]
+Pos=292,694
+Size=367,32
+Collapsed=0
+DockId=0x00000008,0
+
+[Window][toto]
+Pos=60,60
+Size=605,774
+Collapsed=0
+
+[Window][Blend_View_000]
+Pos=1429,28
+Size=483,981
+Collapsed=0
+DockId=0x0000000A,0
+
+[Window][Kaleidoscope_View_001]
+Pos=1429,28
+Size=483,981
+Collapsed=0
+DockId=0x0000000A,1
+
+[Window][Kaleidoscope_View_000]
+Pos=60,60
+Size=256,256
+Collapsed=0
+
+[Window][Tile_View_000]
+Pos=1682,656
+Size=256,256
+Collapsed=0
+
+[Window][TitleBar]
+Pos=0,0
+Size=1920,32
+Collapsed=0
+
+[Window][GLTFRead_View_000]
+Pos=388,114
+Size=924,875
+Collapsed=0
+
+[Window][Disolve_View_000]
+Pos=667,223
+Size=967,680
+Collapsed=0
+
+[Window][PBR2_View_000]
+Pos=1439,40
+Size=473,659
+Collapsed=0
+DockId=0x00000005,1
+
+[Window][Ramp_View_000]
+Pos=286,596
+Size=384,413
+Collapsed=0
+DockId=0x0000000C,0
+
+[Docking][Data]
+DockSpace             ID=0x42052FE6 Pos=8,40 Size=1904,969 Split=X
+  DockNode            ID=0x00000009 Parent=0x42052FE6 SizeRef=1419,981 Split=X
+    DockNode          ID=0x00000002 Parent=0x00000009 SizeRef=276,1001 SelectedTab=0x6E3DA120
+    DockNode          ID=0x00000003 Parent=0x00000009 SizeRef=1626,1001 Split=Y
+      DockNode        ID=0x00000006 Parent=0x00000003 SizeRef=1904,659 Split=X
+        DockNode      ID=0x00000004 Parent=0x00000006 SizeRef=384,1001 Split=Y SelectedTab=0x49CE4B2E
+          DockNode    ID=0x00000007 Parent=0x00000004 SizeRef=338,661 Split=Y SelectedTab=0x49CE4B2E
+            DockNode  ID=0x0000000B Parent=0x00000007 SizeRef=384,554 SelectedTab=0x49CE4B2E
+            DockNode  ID=0x0000000C Parent=0x00000007 SizeRef=384,413 SelectedTab=0xC58199A5
+          DockNode    ID=0x00000008 Parent=0x00000004 SizeRef=338,32 SelectedTab=0x9F3D46BE
+        DockNode      ID=0x00000005 Parent=0x00000006 SizeRef=1240,1001 CentralNode=1 SelectedTab=0xDCFC2AF8
+      DockNode        ID=0x00000001 Parent=0x00000003 SizeRef=1904,308 SelectedTab=0x50BD6962
+  DockNode            ID=0x0000000A Parent=0x42052FE6 SizeRef=483,981 SelectedTab=0x7C4C220E
+
