@@ -79,8 +79,8 @@
         "humanAlliesLife": 30,
         "humanEnemiesLife": 30,
         "aiAlliesLife": 20,
-        "aiEnemiesLife": 100,
-        "shotDamage": 1,
+        "aiEnemiesLife": 30,
+        "shotDamage": 3,
         "missileDamage": 20,
         "delayedEnd": 1}
     }
