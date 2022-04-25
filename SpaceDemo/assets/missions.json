@@ -14,7 +14,9 @@
         "aiEnemiesLife": 9,
         "shotDamage": 3,
         "missileDamage": 20,
-        "delayedEnd": 600}
+        "delayedEnd": 600,
+        "enemyBoundaryRadius": 1600,
+        "humanBoundaryRadius": 3200}
     },
 {"name":"For Jason: 1:1", "description":"1 enemy. 10min duration",
     "gameDefinition":{
@@ -31,7 +33,9 @@
         "aiEnemiesLife": 9,
         "shotDamage": 3,
         "missileDamage": 20,
-        "delayedEnd": 600}
+        "delayedEnd": 600,
+        "enemyBoundaryRadius": 1600,
+        "humanBoundaryRadius": 3200}
     },
 {"name":"Beginner", "description":"Fly solo in this first mission\nto discover the basics of the game.",
     "gameDefinition":{
@@ -48,7 +52,9 @@
         "aiEnemiesLife": 9,
         "shotDamage": 3,
         "missileDamage": 20,
-        "delayedEnd": 1}
+        "delayedEnd": 1,
+        "enemyBoundaryRadius": 400,
+        "humanBoundaryRadius": 800}
     },
 {"name":"Intermediate", "description":"You now have a crew,\nbut also many more enemies.",
     "gameDefinition":{
@@ -65,7 +71,9 @@
         "aiEnemiesLife": 9,
         "shotDamage": 3,
         "missileDamage": 20,
-        "delayedEnd": 1}
+        "delayedEnd": 1,
+        "enemyBoundaryRadius": 400,
+        "humanBoundaryRadius": 800}
     },
 {"name":"Expert", "description":"Full battle with\nmuch tougher enemies.",
     "gameDefinition":{
@@ -82,6 +90,8 @@
         "aiEnemiesLife": 30,
         "shotDamage": 3,
         "missileDamage": 20,
-        "delayedEnd": 1}
+        "delayedEnd": 1,
+        "enemyBoundaryRadius": 400,
+        "humanBoundaryRadius": 800}
     }
 ]
