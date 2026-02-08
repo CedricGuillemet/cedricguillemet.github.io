@@ -1,84 +1,111 @@
-I'm a software developer and this page is a memorandum of a few of the things I did over the years. I like the way pictures talk (especially when animated) so this page is not a resume but a visual reminder of things I loved working on.
+I’m a software developer, and this page is a memorandum of some of the things I’ve done over the years. I like the way pictures speak (especially when animated), so this page is not a résumé, but rather a visual reminder of the projects I loved working on.
 
-# Sofware developer at Microsoft
-I'm doing opensource software, working on <a href="https://www.babylonjs.com/">Babylon.js</a>. Having fun with tech art/demo, devops, native or web tech.
+# Software Developer at Microsoft
+
+I work on open-source software, mainly on <a href="https://www.babylonjs.com/">Babylon.js</a>. I enjoy tech art and demo work, DevOps, and both native and web technologies.
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/kKaomUggipQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-# Sofware developer at Animal Logic
-Now famous for the Lego movies franchise. I have the chance to work on the sequel of the Lego Movie. My mission at Animal Logic consists in making and improving existing tools for the Performance team. Basically handling animation, camera, faces. I've been credited in Lego Ninjago Movie.
-<iframe width="560" height="315" src="https://www.youtube.com/embed/F5JV3nVOLMA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/XvHSlHhh1gk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+# Software Developer at Animal Logic
 
-# Sofware developer at Golaem
-Golaem is a provider of solutions for crowd simulations. I started there in 2012. We had less than 10 clients and even less productions released. Nearly 5 years later, I'm very proud of what the team acheived. Close to 200 clients and dozen of released TV serie episods, movies and video games. I had the chance to work on:
+Now famous for The LEGO Movie franchise. I had the opportunity to work on the sequel to The LEGO Movie. My role at Animal Logic consisted of developing and improving existing tools for the Performance team—mainly handling animation, cameras, and facial systems. I was credited on The LEGO Ninjago Movie.
 
-- The realtime rendering pipeline
+<iframe width="390" height="220" src="https://www.youtube.com/embed/F5JV3nVOLMA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> <iframe width="390" height="220" src="https://www.youtube.com/embed/XvHSlHhh1gk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+# Software Developer at Golaem
+
+Golaem provides solutions for crowd simulation. I joined in 2012, when we had fewer than 10 clients and even fewer released productions. Nearly five years later, I’m very proud of what the team achieved: close to 200 clients and dozens of released TV series episodes, movies, and video games.
+
+I had the chance to work on:
+
+- The real-time rendering pipeline
 - The n-ped animation system
-- Some behaviors like UV-Pin
+- Several behaviors, such as UV-Pin
 - The paint system
-- Internal QA toolchain
+- The internal QA toolchain
 - The Cache Layout Tool
-- many more smaller things
+Many other smaller features
 
-<iframe width="390" height="220" src="https://www.youtube.com/embed/1O5ZFB5wyzQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-<iframe width="390" height="220" src="https://www.youtube.com/embed/doHYxLZ96uU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-<iframe width="390" height="220" src="https://www.youtube.com/embed/q0xCYm6B9yE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="390" height="220" src="https://www.youtube.com/embed/1O5ZFB5wyzQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> <iframe width="390" height="220" src="https://www.youtube.com/embed/doHYxLZ96uU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> <iframe width="390" height="220" src="https://www.youtube.com/embed/q0xCYm6B9yE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-Last year and a half, I devoted my time to the Cache Layout Tool. It can be described as Photoshop for crowd simulations. You can select, move, delete, change trajectory, duplicate,... characters of the simulation. I designed the architecture and coded most of it. I'm especially proud of this feature because it spawned out as a stand alone product.
+During my last year and a half there, I focused on the Cache Layout Tool. It can be described as “Photoshop for crowd simulations.” It allows you to select, move, delete, modify trajectories, duplicate, and otherwise edit characters in a simulation. I designed the architecture and implemented most of it. I’m particularly proud of this feature, as it later evolved into a standalone product.
 
-<iframe width="390" height="220" src="https://www.youtube.com/embed/AsVYEMCwodU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-<iframe width="390" height="220" src="https://www.youtube.com/embed/DVBBKyoOtFA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="390" height="220" src="https://www.youtube.com/embed/AsVYEMCwodU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> <iframe width="390" height="220" src="https://www.youtube.com/embed/DVBBKyoOtFA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-# Game developer
-I've been a game developer for some years(2005-2007) at Fresh3D. I had the chance to release my first game on PlayStation2 : Mountain Bike Adrenaline. It didn't have a good Metacritic but I enjoyed coding all the terrain pipeline from scratch. I also started the PC DX9 conversion but left the company before its release. During those years I also had the chance to put my hands on a PlayStation 3 devkit. We were funded by Sony for an unreleased prototype called 'Strings Attached'. I worked on rendering tech(AO, shadows, SPU skinning). Some bits on audio, lua scripting,..
+# Game Developer
+
+I worked as a game developer from 2005 to 2007 at Fresh3D. I had the chance to release my first game on PlayStation 2: Mountain Bike Adrenaline. It didn’t score well on Metacritic, but I enjoyed coding the entire terrain pipeline from scratch. I also started the PC DirectX 9 conversion but left the company before its release.
+
+During those years, I also had the opportunity to work with a PlayStation 3 devkit. We were funded by Sony for an unreleased prototype called Strings Attached. I worked on rendering technologies (AO, shadows, SPU skinning), as well as some audio and Lua scripting.
+
 <iframe width="390" height="220" src="https://www.youtube.com/embed/lpTMc6PgsRU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-## Personal projects
-# Imogen
-A while ago I wanted to experiment a couple shader and mix them together. After a couple hours I ended up having a basic node graph editor and a property editor.
-<a href="https://github.com/CedricGuillemet/Imogen">I keep adding features. Check the Github page for more infos</a>
+# Personal Projects
 
-![Imogen 0.4]({{ images/Imogen-0.4.0.png }}/images/Imogen-0.4.0.png =390x220)
-![Imogen 0.4]({{ images/Imogen-0.4.0_2.png }}/images/Imogen-0.4.0_2.png =390x220)
+# Imogen
+
+Some time ago, I wanted to experiment with a few shaders and mix them together. After a couple of hours, I ended up with a basic node graph editor and a property editor.
+<a href="https://github.com/CedricGuillemet/Imogen">I keep adding features—check the GitHub page for more information.</a>
+
+![Imogen 0.4]({{ https://cedricguillemet.github.io/images/Imogen-0.4.0.png }}https://cedricguillemet.github.io/images/Imogen-0.4.0.png =390x220)
+![Imogen 0.4]({{ https://cedricguillemet.github.io/images/Imogen-0.4.0_2.png }}https://cedricguillemet.github.io/images/Imogen-0.4.0_2.png =390x220)
 
 # Demomaker
-I like the constraints brought by 64Kb demos and how to pack a 3minutes tech demo with sound, graphics, code in a single 64Kb executable. 
 
-## Arealights @ Revision 2025
+I enjoy the constraints imposed by 64 KB demos, and the challenge of packing a three-minute tech demo—with sound, graphics, and code—into a single 64 KB executable.
+
+# Arealights @ Revision 2025
+
 Made with Babylon.js to showcase area lights.
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/x1Mwm7tZWGg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-## Equiratis Rodentus @ Evoke 2024
-The first demo I've released. 64Kb demo featuring 3 minutes of animation.
+# Equiratis Rodentus @ Evoke 2024
+
+My first released demo: a 64 KB production featuring three minutes of animation.
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/yD3Gfp1_Nik" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-## 4Kb procedural graphics
-A single 4Kb Executable that proceduces a 1920x1080 picture. 
+## 4 KB Procedural Graphics
+
+A single 4 KB executable that generates a 1920×1080 image.
 
 ### 33 Thomas Street
+
 Released at Dream210 2025. <a href="https://www.pouet.net/prod.php?which=105472">Pouet</a>
-![33Thomas]({{ images/33thomas.jpg }}/images/33thomas.jpg =480x270)
+![33Thomas]({{ https://cedricguillemet.github.io/images/33thomas.jpg }}https://cedricguillemet.github.io/images/33thomas.jpg =480x270)
 
-### The descent
+### The Descent
+ 
 Released at Deadline 2025. <a href="https://www.pouet.net/prod.php?which=105084">Pouet</a>
-![thedescent]({{ images/thedescent.png }}/images/thedescent.png =480x270)
+![thedescent]({{ https://cedricguillemet.github.io/images/thedescent.png }}https://cedricguillemet.github.io/images/thedescent.png =480x270)
 
-### Stairwell
+###  Stairwell
+
 Released at Evoke 2025. <a href="https://www.pouet.net/prod.php?which=104775">Pouet</a>
-![stairwell]({{ images/stairwell.png }}/images/stairwell.png =480x270)
+![stairwell]({{ https://cedricguillemet.github.io/images/stairwell.png }}https://cedricguillemet.github.io/images/stairwell.png =480x270)
 
 # .the rush//
-An indie game started as a hobby in 2007 and which finished greenlighted on Steam! It's a futuristic anti-gravity race game featuring 32 tracks made proceduraly. I've spent countless hours making the engine, the procedural content and the gameplay. The game has been presented for 2 years at the Stunfest in Rennes. I did most of the code, design, graphics,.. with the help of some friends.  <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=93538255">Steam page</a>
-<iframe width="390" height="220" src="https://www.youtube.com/embed/IbpPub-0Kt4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-<iframe width="390" height="220" src="https://www.youtube.com/embed/dud64Q3QXYo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+An indie game started as a hobby in 2007 and later greenlit on Steam. It’s a futuristic anti-gravity racing game featuring 32 procedurally generated tracks. I spent countless hours building the engine, procedural content, and gameplay. The game was presented for two years at Stunfest in Rennes. I did most of the code, design, and graphics, with help from a few friends.
+<a href="https://steamcommunity.com/sharedfiles/filedetails/?id=93538255">Steam page</a>
+
+<iframe width="390" height="220" src="https://www.youtube.com/embed/IbpPub-0Kt4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> <iframe width="390" height="220" src="https://www.youtube.com/embed/dud64Q3QXYo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 # SuperFluid Shooter
-A small game experiment featuing SPH fluid solver. Heavily inspired by Pixel Junk Shooter by Q-Games. I fell so much in love with the tech described by Jaymin Kessler during GDC10 that I decided to code it myself.
-<iframe width="390" height="220" src="https://www.youtube.com/embed/1PFjS3RnSM0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-<iframe width="390" height="220" src="https://www.youtube.com/embed/QMm06SqJQHs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+A small game experiment featuring an SPH fluid solver, heavily inspired by PixelJunk Shooter by Q-Games. I became fascinated with the technology presented by Jaymin Kessler at GDC 2010 and decided to implement it myself.
+
+<iframe width="390" height="220" src="https://www.youtube.com/embed/1PFjS3RnSM0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> <iframe width="390" height="220" src="https://www.youtube.com/embed/QMm06SqJQHs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 # ImGuizmo
-ImGizmo is a small (.h and .cpp) library built ontop of Dear ImGui that allow you to manipulate(Rotate & translate at the moment) 4x4 float matrices. No other dependancies. Coded with Immediate Mode (IM) philosophy in mind.<a href="https://github.com/CedricGuillemet/ImGuizmo">Fork it on GitHub!</a><br>
 
-![Imguizmo]({{ images/gizmo_rotate.gif }}/images/gizmo_rotate.gif =390x220)
-![Imguizmo]({{ images/scale.gif }}/images/scale.gif =390x220)
+ImGuizmo is a small (.h and .cpp) library built on top of Dear ImGui that allows manipulation (currently rotation and translation) of 4×4 float matrices. It has no external dependencies and is designed with an Immediate Mode (IM) philosophy in mind.
+<a href="https://github.com/CedricGuillemet/ImGuizmo">Fork it on GitHub!</a><br>
+
+![Imguizmo]({{ https://cedricguillemet.github.io/images/gizmo_rotate.gif }}https://cedricguillemet.github.io/images/gizmo_rotate.gif =390x220)
+![Imguizmo]({{ https://cedricguillemet.github.io/images/scale.gif }}https://cedricguillemet.github.io/images/scale.gif =390x220)
+
+
+
+
