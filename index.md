@@ -47,8 +47,7 @@ During those years, I also had the opportunity to work with a PlayStation 3 devk
 Some time ago, I wanted to experiment with a few shaders and mix them together. After a couple of hours, I ended up with a basic node graph editor and a property editor.
 <a href="https://github.com/CedricGuillemet/Imogen">I keep adding features—check the GitHub page for more information.</a>
 
-![Imogen 0.4]({{ https://cedricguillemet.github.io/images/Imogen-0.4.0.png }}https://cedricguillemet.github.io/images/Imogen-0.4.0.png =390x220)
-![Imogen 0.4]({{ https://cedricguillemet.github.io/images/Imogen-0.4.0_2.png }}https://cedricguillemet.github.io/images/Imogen-0.4.0_2.png =390x220)
+<img src="https://cedricguillemet.github.io/images/Imogen-0.4.0.png" alt="Imogen 0.4" width="390" height="220"> <img src="https://cedricguillemet.github.io/images/Imogen-0.4.0_2.png" alt="Imogen 0.4" width="390" height="220">
 
 # Demomaker
 
@@ -73,17 +72,17 @@ A single 4 KB executable that generates a 1920×1080 image.
 ### 33 Thomas Street
 
 Released at Dream210 2025. <a href="https://www.pouet.net/prod.php?which=105472">Pouet</a>
-![33Thomas]({{ https://cedricguillemet.github.io/images/33thomas.jpg }}https://cedricguillemet.github.io/images/33thomas.jpg =480x270)
+<img src="https://cedricguillemet.github.io/images/33thomas.jpg" alt="33 Thomas Street" width="480" height="270">
 
 ### The Descent
  
 Released at Deadline 2025. <a href="https://www.pouet.net/prod.php?which=105084">Pouet</a>
-![thedescent]({{ https://cedricguillemet.github.io/images/thedescent.png }}https://cedricguillemet.github.io/images/thedescent.png =480x270)
+<img src="https://cedricguillemet.github.io/images/thedescent.png" alt="The Descent" width="480" height="270">
 
 ###  Stairwell
 
 Released at Evoke 2025. <a href="https://www.pouet.net/prod.php?which=104775">Pouet</a>
-![stairwell]({{ https://cedricguillemet.github.io/images/stairwell.png }}https://cedricguillemet.github.io/images/stairwell.png =480x270)
+<img src="https://cedricguillemet.github.io/images/stairwell.png" alt="Stairwell" width="480" height="270">
 
 # .the rush//
 
@@ -103,8 +102,7 @@ A small game experiment featuring an SPH fluid solver, heavily inspired by Pixel
 ImGuizmo is a small (.h and .cpp) library built on top of Dear ImGui that allows manipulation (currently rotation and translation) of 4×4 float matrices. It has no external dependencies and is designed with an Immediate Mode (IM) philosophy in mind.
 <a href="https://github.com/CedricGuillemet/ImGuizmo">Fork it on GitHub!</a><br>
 
-![Imguizmo]({{ https://cedricguillemet.github.io/images/gizmo_rotate.gif }}https://cedricguillemet.github.io/images/gizmo_rotate.gif =390x220)
-<img src="https://cedricguillemet.github.io/images/scale.gif" alt="Imguizmo" width="390" height="220">
+<img src="https://cedricguillemet.github.io/images/gizmo_rotate.gif" alt="ImGuizmo rotation" width="390" height="220"> <img src="https://cedricguillemet.github.io/images/scale.gif" alt="ImGuizmo scale" width="390" height="220">
 
 
 
