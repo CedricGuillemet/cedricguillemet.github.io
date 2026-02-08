@@ -104,7 +104,7 @@ ImGuizmo is a small (.h and .cpp) library built on top of Dear ImGui that allows
 <a href="https://github.com/CedricGuillemet/ImGuizmo">Fork it on GitHub!</a><br>
 
 ![Imguizmo]({{ https://cedricguillemet.github.io/images/gizmo_rotate.gif }}https://cedricguillemet.github.io/images/gizmo_rotate.gif =390x220)
-![Imguizmo]({{ https://cedricguillemet.github.io/images/scale.gif }}https://cedricguillemet.github.io/images/scale.gif =390x220)
+<img src="https://cedricguillemet.github.io/images/scale.gif" alt="Imguizmo" width="390" height="220">
 
 
 
