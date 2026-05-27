@@ -87,8 +87,11 @@
     .view { display: none; }
     .view.active { display: block; }
     .footer { margin-top: 32px; color: var(--muted); font-size: 0.85em; }
+    .methodology { margin: 8px 0 16px; padding-left: 22px; font-size: 0.9em; color: var(--fg); }
+    .methodology li { margin: 2px 0; }
+    .methodology code { background: var(--panel-bg); border: 1px solid var(--border); border-radius: 3px; padding: 0 4px; font-size: 0.92em; }
     .chart-cell { padding: 8px; background: var(--panel-bg); }
-    .chart { width: 100%; height: 140px; max-width: 880px; display: block; }
+    .chart { width: 100%; height: 140px; display: block; }
     .chart-line { fill: none; stroke: var(--chart-line); stroke-width: 1; }
     .chart-axis { stroke: var(--chart-axis); stroke-width: 1; }
     .chart-tick { fill: var(--muted); font-size: 10px; font-family: ui-monospace, Menlo, Consolas, monospace; }
@@ -107,7 +110,13 @@
 </head>
 <body>
 <h1>Babylon Native perf report</h1>
-<p>Cross-engine comparison. Numbers are lower-is-better. Each cell shows the displayed engine on top; comparison engines appear below in small text with their value and percentage delta (green = displayed engine is faster, red = slower). Click <strong>▶ Graph</strong> on a row to inspect the per-frame timing for that asset on the displayed engine; warmup region is shaded.</p>
+<p>Cross-engine comparison. Lower is better for every metric.</p>
+<ul class="methodology">
+    <li><strong>Frame budget per asset:</strong> 1000 warmup frames (untimed for stats) + 2000 timed frames = 3000 frames total, identical for every <code>.glb</code> and <code>.js</code>.</li>
+    <li><strong>Avg / Min / Max</strong> in the table are computed over the <strong>2000 timed frames only</strong>; warmup is excluded.</li>
+    <li>Each <strong>Avg / frame</strong> cell shows <code>avg ms (min - max)</code>; comparison engines appear in small text below with the same triple plus a percentage delta (green = displayed engine is faster, red = slower).</li>
+    <li>Click <strong>▶ Graph</strong> on a row for an inline per-frame timing curve (all 3000 frames; warmup region shaded).</li>
+</ul>
 
 <div class="controls">
     <span class="group-label">Display:</span>
@@ -129,15 +138,12 @@
             <h2>Summary (display: Chakra)</h2>
             <table class="metrics"><tbody><tr><th>Rounds</th><td><div class="primary">9 (8 succeeded)</div><div class="compare">V8: 9 (9 succeeded)</div><div class="compare">QuickJS: 9 (9 succeeded)</div></td></tr><tr><th>Native initialization (avg)</th><td><div class="primary">6.403 ms</div><div class="compare">V8: 5.782 ms <span class="delta worse">-9.7%</span></div><div class="compare">QuickJS: 2.100 ms <span class="delta worse">-67.2%</span></div></td></tr><tr><th>`babylon.max.js` eval (avg)</th><td><div class="primary">1780.929 ms</div><div class="compare">V8: 439.365 ms <span class="delta worse">-75.3%</span></div><div class="compare">QuickJS: 1070.130 ms <span class="delta worse">-39.9%</span></div></td></tr><tr><th>`babylonjs.loaders.js` eval (avg)</th><td><div class="primary">73.435 ms</div><div class="compare">V8: 35.180 ms <span class="delta worse">-52.1%</span></div><div class="compare">QuickJS: 71.546 ms <span class="delta worse">-2.6%</span></div></td></tr></tbody></table>
             <h2>GLB assets (display: Chakra)</h2>
-            <table><thead><tr><th>Asset</th><th>Frames</th><th>Parse (ms)</th><th>Avg / frame (ms)</th><th>Min / frame (ms)</th><th>Max / frame (ms)</th></tr></thead><tbody><tr>
+            <table><thead><tr><th>Asset</th><th>Parse (ms)</th><th>Avg / frame (ms)</th></tr></thead><tbody><tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-Chakra-0" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">Horse.glb</span></div><div class="compare"><span class="muted">V8: ok</span></div><div class="compare"><span class="muted">QuickJS: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">534.180 ms</div><div class="compare">V8: 834.201 ms <span class="delta better">+56.2%</span></div><div class="compare">QuickJS: 593.848 ms <span class="delta better">+11.2%</span></div></td>
-            <td><div class="primary">0.454 ms</div><div class="compare">V8: 0.220 ms <span class="delta worse">-51.4%</span></div><div class="compare">QuickJS: 0.934 ms <span class="delta better">+106.0%</span></div></td>
-            <td><div class="primary">0.275 ms</div><div class="compare">V8: 0.120 ms <span class="delta worse">-56.5%</span></div><div class="compare">QuickJS: 0.585 ms <span class="delta better">+112.6%</span></div></td>
-            <td><div class="primary">1.119 ms</div><div class="compare">V8: 0.764 ms <span class="delta worse">-31.7%</span></div><div class="compare">QuickJS: 2.261 ms <span class="delta better">+102.0%</span></div></td>
+            <td><div class="primary">0.454 ms (0.275 - 1.119)</div><div class="compare">V8: 0.220 ms (0.120 - 0.764) <span class="delta worse">-51.4%</span></div><div class="compare">QuickJS: 0.934 ms (0.585 - 2.261) <span class="delta better">+106.0%</span></div></td>
         </tr><tr id="chart-glb-Chakra-0" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -152,13 +158,10 @@
               </tr>
 <tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-Chakra-1" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">PBR_Spheres.glb</span></div><div class="compare"><span class="muted">V8: ok</span></div><div class="compare"><span class="muted">QuickJS: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">646.236 ms</div><div class="compare">V8: 306.056 ms <span class="delta worse">-52.6%</span></div><div class="compare">QuickJS: 453.600 ms <span class="delta worse">-29.8%</span></div></td>
-            <td><div class="primary">1.434 ms</div><div class="compare">V8: 0.357 ms <span class="delta worse">-75.1%</span></div><div class="compare">QuickJS: 3.184 ms <span class="delta better">+122.1%</span></div></td>
-            <td><div class="primary">0.780 ms</div><div class="compare">V8: 0.194 ms <span class="delta worse">-75.2%</span></div><div class="compare">QuickJS: 2.139 ms <span class="delta better">+174.1%</span></div></td>
-            <td><div class="primary">4.414 ms</div><div class="compare">V8: 0.986 ms <span class="delta worse">-77.7%</span></div><div class="compare">QuickJS: 12.710 ms <span class="delta better">+187.9%</span></div></td>
+            <td><div class="primary">1.434 ms (0.780 - 4.414)</div><div class="compare">V8: 0.357 ms (0.194 - 0.986) <span class="delta worse">-75.1%</span></div><div class="compare">QuickJS: 3.184 ms (2.139 - 12.710) <span class="delta better">+122.1%</span></div></td>
         </tr><tr id="chart-glb-Chakra-1" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -173,13 +176,10 @@
               </tr>
 <tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-Chakra-2" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">alien.glb</span></div><div class="compare"><span class="muted">V8: ok</span></div><div class="compare"><span class="muted">QuickJS: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">1115.834 ms</div><div class="compare">V8: 773.104 ms <span class="delta worse">-30.7%</span></div><div class="compare">QuickJS: 1368.523 ms <span class="delta better">+22.6%</span></div></td>
-            <td><div class="primary">1.297 ms</div><div class="compare">V8: 0.417 ms <span class="delta worse">-67.8%</span></div><div class="compare">QuickJS: 3.184 ms <span class="delta better">+145.5%</span></div></td>
-            <td><div class="primary">0.722 ms</div><div class="compare">V8: 0.208 ms <span class="delta worse">-71.2%</span></div><div class="compare">QuickJS: 2.230 ms <span class="delta better">+208.9%</span></div></td>
-            <td><div class="primary">11.385 ms</div><div class="compare">V8: 0.910 ms <span class="delta worse">-92.0%</span></div><div class="compare">QuickJS: 8.764 ms <span class="delta worse">-23.0%</span></div></td>
+            <td><div class="primary">1.297 ms (0.722 - 11.385)</div><div class="compare">V8: 0.417 ms (0.208 - 0.910) <span class="delta worse">-67.8%</span></div><div class="compare">QuickJS: 3.184 ms (2.230 - 8.764) <span class="delta better">+145.5%</span></div></td>
         </tr><tr id="chart-glb-Chakra-2" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -194,13 +194,10 @@
               </tr>
 <tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-Chakra-3" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">boombox.glb</span></div><div class="compare"><span class="muted">V8: ok</span></div><div class="compare"><span class="muted">QuickJS: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">810.815 ms</div><div class="compare">V8: 494.914 ms <span class="delta worse">-39.0%</span></div><div class="compare">QuickJS: 699.605 ms <span class="delta worse">-13.7%</span></div></td>
-            <td><div class="primary">0.534 ms</div><div class="compare">V8: 0.212 ms <span class="delta worse">-60.3%</span></div><div class="compare">QuickJS: 1.228 ms <span class="delta better">+130.0%</span></div></td>
-            <td><div class="primary">0.191 ms</div><div class="compare">V8: 0.084 ms <span class="delta worse">-56.0%</span></div><div class="compare">QuickJS: 0.650 ms <span class="delta better">+241.1%</span></div></td>
-            <td><div class="primary">6.875 ms</div><div class="compare">V8: 0.666 ms <span class="delta worse">-90.3%</span></div><div class="compare">QuickJS: 10.011 ms <span class="delta better">+45.6%</span></div></td>
+            <td><div class="primary">0.534 ms (0.191 - 6.875)</div><div class="compare">V8: 0.212 ms (0.084 - 0.666) <span class="delta worse">-60.3%</span></div><div class="compare">QuickJS: 1.228 ms (0.650 - 10.011) <span class="delta better">+130.0%</span></div></td>
         </tr><tr id="chart-glb-Chakra-3" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -215,13 +212,10 @@
               </tr>
 <tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-Chakra-4" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">face-rig-11-full-opt.glb</span></div><div class="compare"><span class="muted">V8: ok</span></div><div class="compare"><span class="muted">QuickJS: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">2528.339 ms</div><div class="compare">V8: 995.191 ms <span class="delta worse">-60.6%</span></div><div class="compare">QuickJS: 9140.810 ms <span class="delta better">+261.5%</span></div></td>
-            <td><div class="primary">30.280 ms</div><div class="compare">V8: 9.689 ms <span class="delta worse">-68.0%</span></div><div class="compare">QuickJS: 123.085 ms <span class="delta better">+306.5%</span></div></td>
-            <td><div class="primary">16.911 ms</div><div class="compare">V8: 8.379 ms <span class="delta worse">-50.5%</span></div><div class="compare">QuickJS: 97.577 ms <span class="delta better">+477.0%</span></div></td>
-            <td><div class="primary">166.604 ms</div><div class="compare">V8: 24.183 ms <span class="delta worse">-85.5%</span></div><div class="compare">QuickJS: 317.110 ms <span class="delta better">+90.3%</span></div></td>
+            <td><div class="primary">30.280 ms (16.911 - 166.604)</div><div class="compare">V8: 9.689 ms (8.379 - 24.183) <span class="delta worse">-68.0%</span></div><div class="compare">QuickJS: 123.085 ms (97.577 - 317.110) <span class="delta better">+306.5%</span></div></td>
         </tr><tr id="chart-glb-Chakra-4" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -236,13 +230,10 @@
               </tr>
 <tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-Chakra-5" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">fish.glb</span></div><div class="compare"><span class="muted">V8: ok</span></div><div class="compare"><span class="muted">QuickJS: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">1308.989 ms</div><div class="compare">V8: 864.024 ms <span class="delta worse">-34.0%</span></div><div class="compare">QuickJS: 3349.572 ms <span class="delta better">+155.9%</span></div></td>
-            <td><div class="primary">2.392 ms</div><div class="compare">V8: 1.068 ms <span class="delta worse">-55.3%</span></div><div class="compare">QuickJS: 11.184 ms <span class="delta better">+367.6%</span></div></td>
-            <td><div class="primary">1.181 ms</div><div class="compare">V8: 0.730 ms <span class="delta worse">-38.2%</span></div><div class="compare">QuickJS: 8.243 ms <span class="delta better">+598.3%</span></div></td>
-            <td><div class="primary">36.455 ms</div><div class="compare">V8: 2.150 ms <span class="delta worse">-94.1%</span></div><div class="compare">QuickJS: 56.361 ms <span class="delta better">+54.6%</span></div></td>
+            <td><div class="primary">2.392 ms (1.181 - 36.455)</div><div class="compare">V8: 1.068 ms (0.730 - 2.150) <span class="delta worse">-55.3%</span></div><div class="compare">QuickJS: 11.184 ms (8.243 - 56.361) <span class="delta better">+367.6%</span></div></td>
         </tr><tr id="chart-glb-Chakra-5" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -257,13 +248,10 @@
               </tr>
 <tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-Chakra-6" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">flightHelmet.glb</span></div><div class="compare"><span class="muted">V8: ok</span></div><div class="compare"><span class="muted">QuickJS: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">1370.890 ms</div><div class="compare">V8: 904.292 ms <span class="delta worse">-34.0%</span></div><div class="compare">QuickJS: 1619.743 ms <span class="delta better">+18.2%</span></div></td>
-            <td><div class="primary">1.106 ms</div><div class="compare">V8: 0.373 ms <span class="delta worse">-66.2%</span></div><div class="compare">QuickJS: 3.627 ms <span class="delta better">+228.1%</span></div></td>
-            <td><div class="primary">0.628 ms</div><div class="compare">V8: 0.211 ms <span class="delta worse">-66.4%</span></div><div class="compare">QuickJS: 2.437 ms <span class="delta better">+288.2%</span></div></td>
-            <td><div class="primary">2.676 ms</div><div class="compare">V8: 0.778 ms <span class="delta worse">-70.9%</span></div><div class="compare">QuickJS: 17.726 ms <span class="delta better">+562.3%</span></div></td>
+            <td><div class="primary">1.106 ms (0.628 - 2.676)</div><div class="compare">V8: 0.373 ms (0.211 - 0.778) <span class="delta worse">-66.2%</span></div><div class="compare">QuickJS: 3.627 ms (2.437 - 17.726) <span class="delta better">+228.1%</span></div></td>
         </tr><tr id="chart-glb-Chakra-6" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -278,13 +266,10 @@
               </tr>
 <tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-Chakra-7" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">shoe_variants.glb</span></div><div class="compare"><span class="muted">V8: ok</span></div><div class="compare"><span class="muted">QuickJS: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">765.105 ms</div><div class="compare">V8: 452.559 ms <span class="delta worse">-40.9%</span></div><div class="compare">QuickJS: 700.476 ms <span class="delta worse">-8.4%</span></div></td>
-            <td><div class="primary">0.467 ms</div><div class="compare">V8: 0.225 ms <span class="delta worse">-51.8%</span></div><div class="compare">QuickJS: 0.938 ms <span class="delta better">+100.9%</span></div></td>
-            <td><div class="primary">0.262 ms</div><div class="compare">V8: 0.083 ms <span class="delta worse">-68.2%</span></div><div class="compare">QuickJS: 0.519 ms <span class="delta better">+98.2%</span></div></td>
-            <td><div class="primary">1.451 ms</div><div class="compare">V8: 1.429 ms <span class="delta worse">-1.5%</span></div><div class="compare">QuickJS: 2.771 ms <span class="delta better">+91.0%</span></div></td>
+            <td><div class="primary">0.467 ms (0.262 - 1.451)</div><div class="compare">V8: 0.225 ms (0.083 - 1.429) <span class="delta worse">-51.8%</span></div><div class="compare">QuickJS: 0.938 ms (0.519 - 2.771) <span class="delta better">+100.9%</span></div></td>
         </tr><tr id="chart-glb-Chakra-7" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -298,9 +283,9 @@
                   </td>
               </tr></tbody></table>
             <h2>JS assets (display: Chakra)</h2>
-            <table><thead><tr><th>Asset</th><th>Frames</th><th>Parse (ms)</th><th>Avg / frame (ms)</th><th>Min / frame (ms)</th><th>Max / frame (ms)</th></tr></thead><tbody><tr>
+            <table><thead><tr><th>Asset</th><th>Parse (ms)</th><th>Avg / frame (ms)</th></tr></thead><tbody><tr>
                 <td><div class="primary asset"><span class="asset-name">fullscreen-shader.js</span></div><div class="compare"><span class="muted">V8: ok</span></div><div class="compare"><span class="muted">QuickJS: ok</span></div></td>
-                <td colspan="5"><div class="failed">FAILED: SyntaxError: Syntax error
+                <td colspan="2"><div class="failed">FAILED: SyntaxError: Syntax error
    at Anonymous function (app:///Assets/tests.perf.assetPerf.js:780:12)
    at Anonymous function (app:///Assets/tests.perf.assetPerf.js:307:9)
    at Anonymous function (app:///Assets/tests.perf.assetPerf.js:85:20)
@@ -313,15 +298,12 @@
             <h2>Summary (display: V8)</h2>
             <table class="metrics"><tbody><tr><th>Rounds</th><td><div class="primary">9 (9 succeeded)</div><div class="compare">Chakra: 9 (8 succeeded)</div><div class="compare">QuickJS: 9 (9 succeeded)</div></td></tr><tr><th>Native initialization (avg)</th><td><div class="primary">5.782 ms</div><div class="compare">Chakra: 6.403 ms <span class="delta better">+10.7%</span></div><div class="compare">QuickJS: 2.100 ms <span class="delta worse">-63.7%</span></div></td></tr><tr><th>`babylon.max.js` eval (avg)</th><td><div class="primary">439.365 ms</div><div class="compare">Chakra: 1780.929 ms <span class="delta better">+305.3%</span></div><div class="compare">QuickJS: 1070.130 ms <span class="delta better">+143.6%</span></div></td></tr><tr><th>`babylonjs.loaders.js` eval (avg)</th><td><div class="primary">35.180 ms</div><div class="compare">Chakra: 73.435 ms <span class="delta better">+108.7%</span></div><div class="compare">QuickJS: 71.546 ms <span class="delta better">+103.4%</span></div></td></tr></tbody></table>
             <h2>GLB assets (display: V8)</h2>
-            <table><thead><tr><th>Asset</th><th>Frames</th><th>Parse (ms)</th><th>Avg / frame (ms)</th><th>Min / frame (ms)</th><th>Max / frame (ms)</th></tr></thead><tbody><tr>
+            <table><thead><tr><th>Asset</th><th>Parse (ms)</th><th>Avg / frame (ms)</th></tr></thead><tbody><tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-V8-0" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">Horse.glb</span></div><div class="compare"><span class="muted">Chakra: ok</span></div><div class="compare"><span class="muted">QuickJS: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">834.201 ms</div><div class="compare">Chakra: 534.180 ms <span class="delta worse">-36.0%</span></div><div class="compare">QuickJS: 593.848 ms <span class="delta worse">-28.8%</span></div></td>
-            <td><div class="primary">0.220 ms</div><div class="compare">Chakra: 0.454 ms <span class="delta better">+105.9%</span></div><div class="compare">QuickJS: 0.934 ms <span class="delta better">+324.0%</span></div></td>
-            <td><div class="primary">0.120 ms</div><div class="compare">Chakra: 0.275 ms <span class="delta better">+129.7%</span></div><div class="compare">QuickJS: 0.585 ms <span class="delta better">+388.3%</span></div></td>
-            <td><div class="primary">0.764 ms</div><div class="compare">Chakra: 1.119 ms <span class="delta better">+46.4%</span></div><div class="compare">QuickJS: 2.261 ms <span class="delta better">+195.8%</span></div></td>
+            <td><div class="primary">0.220 ms (0.120 - 0.764)</div><div class="compare">Chakra: 0.454 ms (0.275 - 1.119) <span class="delta better">+105.9%</span></div><div class="compare">QuickJS: 0.934 ms (0.585 - 2.261) <span class="delta better">+324.0%</span></div></td>
         </tr><tr id="chart-glb-V8-0" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -336,13 +318,10 @@
               </tr>
 <tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-V8-1" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">PBR_Spheres.glb</span></div><div class="compare"><span class="muted">Chakra: ok</span></div><div class="compare"><span class="muted">QuickJS: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">306.056 ms</div><div class="compare">Chakra: 646.236 ms <span class="delta better">+111.1%</span></div><div class="compare">QuickJS: 453.600 ms <span class="delta better">+48.2%</span></div></td>
-            <td><div class="primary">0.357 ms</div><div class="compare">Chakra: 1.434 ms <span class="delta better">+301.6%</span></div><div class="compare">QuickJS: 3.184 ms <span class="delta better">+791.9%</span></div></td>
-            <td><div class="primary">0.194 ms</div><div class="compare">Chakra: 0.780 ms <span class="delta better">+302.4%</span></div><div class="compare">QuickJS: 2.139 ms <span class="delta better">+1003.1%</span></div></td>
-            <td><div class="primary">0.986 ms</div><div class="compare">Chakra: 4.414 ms <span class="delta better">+347.7%</span></div><div class="compare">QuickJS: 12.710 ms <span class="delta better">+1188.9%</span></div></td>
+            <td><div class="primary">0.357 ms (0.194 - 0.986)</div><div class="compare">Chakra: 1.434 ms (0.780 - 4.414) <span class="delta better">+301.6%</span></div><div class="compare">QuickJS: 3.184 ms (2.139 - 12.710) <span class="delta better">+791.9%</span></div></td>
         </tr><tr id="chart-glb-V8-1" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -357,13 +336,10 @@
               </tr>
 <tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-V8-2" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">alien.glb</span></div><div class="compare"><span class="muted">Chakra: ok</span></div><div class="compare"><span class="muted">QuickJS: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">773.104 ms</div><div class="compare">Chakra: 1115.834 ms <span class="delta better">+44.3%</span></div><div class="compare">QuickJS: 1368.523 ms <span class="delta better">+77.0%</span></div></td>
-            <td><div class="primary">0.417 ms</div><div class="compare">Chakra: 1.297 ms <span class="delta better">+210.7%</span></div><div class="compare">QuickJS: 3.184 ms <span class="delta better">+662.7%</span></div></td>
-            <td><div class="primary">0.208 ms</div><div class="compare">Chakra: 0.722 ms <span class="delta better">+246.8%</span></div><div class="compare">QuickJS: 2.230 ms <span class="delta better">+971.1%</span></div></td>
-            <td><div class="primary">0.910 ms</div><div class="compare">Chakra: 11.385 ms <span class="delta better">+1151.5%</span></div><div class="compare">QuickJS: 8.764 ms <span class="delta better">+863.4%</span></div></td>
+            <td><div class="primary">0.417 ms (0.208 - 0.910)</div><div class="compare">Chakra: 1.297 ms (0.722 - 11.385) <span class="delta better">+210.7%</span></div><div class="compare">QuickJS: 3.184 ms (2.230 - 8.764) <span class="delta better">+662.7%</span></div></td>
         </tr><tr id="chart-glb-V8-2" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -378,13 +354,10 @@
               </tr>
 <tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-V8-3" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">boombox.glb</span></div><div class="compare"><span class="muted">Chakra: ok</span></div><div class="compare"><span class="muted">QuickJS: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">494.914 ms</div><div class="compare">Chakra: 810.815 ms <span class="delta better">+63.8%</span></div><div class="compare">QuickJS: 699.605 ms <span class="delta better">+41.4%</span></div></td>
-            <td><div class="primary">0.212 ms</div><div class="compare">Chakra: 0.534 ms <span class="delta better">+151.7%</span></div><div class="compare">QuickJS: 1.228 ms <span class="delta better">+478.8%</span></div></td>
-            <td><div class="primary">0.084 ms</div><div class="compare">Chakra: 0.191 ms <span class="delta better">+127.2%</span></div><div class="compare">QuickJS: 0.650 ms <span class="delta better">+675.0%</span></div></td>
-            <td><div class="primary">0.666 ms</div><div class="compare">Chakra: 6.875 ms <span class="delta better">+933.0%</span></div><div class="compare">QuickJS: 10.011 ms <span class="delta better">+1404.1%</span></div></td>
+            <td><div class="primary">0.212 ms (0.084 - 0.666)</div><div class="compare">Chakra: 0.534 ms (0.191 - 6.875) <span class="delta better">+151.7%</span></div><div class="compare">QuickJS: 1.228 ms (0.650 - 10.011) <span class="delta better">+478.8%</span></div></td>
         </tr><tr id="chart-glb-V8-3" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -399,13 +372,10 @@
               </tr>
 <tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-V8-4" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">face-rig-11-full-opt.glb</span></div><div class="compare"><span class="muted">Chakra: ok</span></div><div class="compare"><span class="muted">QuickJS: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">995.191 ms</div><div class="compare">Chakra: 2528.339 ms <span class="delta better">+154.1%</span></div><div class="compare">QuickJS: 9140.810 ms <span class="delta better">+818.5%</span></div></td>
-            <td><div class="primary">9.689 ms</div><div class="compare">Chakra: 30.280 ms <span class="delta better">+212.5%</span></div><div class="compare">QuickJS: 123.085 ms <span class="delta better">+1170.4%</span></div></td>
-            <td><div class="primary">8.379 ms</div><div class="compare">Chakra: 16.911 ms <span class="delta better">+101.8%</span></div><div class="compare">QuickJS: 97.577 ms <span class="delta better">+1064.5%</span></div></td>
-            <td><div class="primary">24.183 ms</div><div class="compare">Chakra: 166.604 ms <span class="delta better">+588.9%</span></div><div class="compare">QuickJS: 317.110 ms <span class="delta better">+1211.3%</span></div></td>
+            <td><div class="primary">9.689 ms (8.379 - 24.183)</div><div class="compare">Chakra: 30.280 ms (16.911 - 166.604) <span class="delta better">+212.5%</span></div><div class="compare">QuickJS: 123.085 ms (97.577 - 317.110) <span class="delta better">+1170.4%</span></div></td>
         </tr><tr id="chart-glb-V8-4" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -420,13 +390,10 @@
               </tr>
 <tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-V8-5" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">fish.glb</span></div><div class="compare"><span class="muted">Chakra: ok</span></div><div class="compare"><span class="muted">QuickJS: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">864.024 ms</div><div class="compare">Chakra: 1308.989 ms <span class="delta better">+51.5%</span></div><div class="compare">QuickJS: 3349.572 ms <span class="delta better">+287.7%</span></div></td>
-            <td><div class="primary">1.068 ms</div><div class="compare">Chakra: 2.392 ms <span class="delta better">+123.9%</span></div><div class="compare">QuickJS: 11.184 ms <span class="delta better">+946.7%</span></div></td>
-            <td><div class="primary">0.730 ms</div><div class="compare">Chakra: 1.181 ms <span class="delta better">+61.7%</span></div><div class="compare">QuickJS: 8.243 ms <span class="delta better">+1029.4%</span></div></td>
-            <td><div class="primary">2.150 ms</div><div class="compare">Chakra: 36.455 ms <span class="delta better">+1595.4%</span></div><div class="compare">QuickJS: 56.361 ms <span class="delta better">+2521.2%</span></div></td>
+            <td><div class="primary">1.068 ms (0.730 - 2.150)</div><div class="compare">Chakra: 2.392 ms (1.181 - 36.455) <span class="delta better">+123.9%</span></div><div class="compare">QuickJS: 11.184 ms (8.243 - 56.361) <span class="delta better">+946.7%</span></div></td>
         </tr><tr id="chart-glb-V8-5" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -441,13 +408,10 @@
               </tr>
 <tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-V8-6" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">flightHelmet.glb</span></div><div class="compare"><span class="muted">Chakra: ok</span></div><div class="compare"><span class="muted">QuickJS: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">904.292 ms</div><div class="compare">Chakra: 1370.890 ms <span class="delta better">+51.6%</span></div><div class="compare">QuickJS: 1619.743 ms <span class="delta better">+79.1%</span></div></td>
-            <td><div class="primary">0.373 ms</div><div class="compare">Chakra: 1.106 ms <span class="delta better">+196.0%</span></div><div class="compare">QuickJS: 3.627 ms <span class="delta better">+871.2%</span></div></td>
-            <td><div class="primary">0.211 ms</div><div class="compare">Chakra: 0.628 ms <span class="delta better">+197.2%</span></div><div class="compare">QuickJS: 2.437 ms <span class="delta better">+1053.6%</span></div></td>
-            <td><div class="primary">0.778 ms</div><div class="compare">Chakra: 2.676 ms <span class="delta better">+244.1%</span></div><div class="compare">QuickJS: 17.726 ms <span class="delta better">+2178.6%</span></div></td>
+            <td><div class="primary">0.373 ms (0.211 - 0.778)</div><div class="compare">Chakra: 1.106 ms (0.628 - 2.676) <span class="delta better">+196.0%</span></div><div class="compare">QuickJS: 3.627 ms (2.437 - 17.726) <span class="delta better">+871.2%</span></div></td>
         </tr><tr id="chart-glb-V8-6" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -462,13 +426,10 @@
               </tr>
 <tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-V8-7" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">shoe_variants.glb</span></div><div class="compare"><span class="muted">Chakra: ok</span></div><div class="compare"><span class="muted">QuickJS: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">452.559 ms</div><div class="compare">Chakra: 765.105 ms <span class="delta better">+69.1%</span></div><div class="compare">QuickJS: 700.476 ms <span class="delta better">+54.8%</span></div></td>
-            <td><div class="primary">0.225 ms</div><div class="compare">Chakra: 0.467 ms <span class="delta better">+107.6%</span></div><div class="compare">QuickJS: 0.938 ms <span class="delta better">+317.1%</span></div></td>
-            <td><div class="primary">0.083 ms</div><div class="compare">Chakra: 0.262 ms <span class="delta better">+214.5%</span></div><div class="compare">QuickJS: 0.519 ms <span class="delta better">+523.4%</span></div></td>
-            <td><div class="primary">1.429 ms</div><div class="compare">Chakra: 1.451 ms <span class="delta better">+1.5%</span></div><div class="compare">QuickJS: 2.771 ms <span class="delta better">+93.9%</span></div></td>
+            <td><div class="primary">0.225 ms (0.083 - 1.429)</div><div class="compare">Chakra: 0.467 ms (0.262 - 1.451) <span class="delta better">+107.6%</span></div><div class="compare">QuickJS: 0.938 ms (0.519 - 2.771) <span class="delta better">+317.1%</span></div></td>
         </tr><tr id="chart-glb-V8-7" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -482,15 +443,12 @@
                   </td>
               </tr></tbody></table>
             <h2>JS assets (display: V8)</h2>
-            <table><thead><tr><th>Asset</th><th>Frames</th><th>Parse (ms)</th><th>Avg / frame (ms)</th><th>Min / frame (ms)</th><th>Max / frame (ms)</th></tr></thead><tbody><tr>
+            <table><thead><tr><th>Asset</th><th>Parse (ms)</th><th>Avg / frame (ms)</th></tr></thead><tbody><tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-js-V8-0" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">fullscreen-shader.js</span></div><div class="compare"><span class="muted">Chakra: FAILED</span></div><div class="compare"><span class="muted">QuickJS: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">123.274 ms</div><div class="compare">Chakra: FAILED <span class="delta">—</span></div><div class="compare">QuickJS: 164.587 ms <span class="delta better">+33.5%</span></div></td>
-            <td><div class="primary">0.070 ms</div><div class="compare">Chakra: FAILED <span class="delta">—</span></div><div class="compare">QuickJS: 0.287 ms <span class="delta better">+309.0%</span></div></td>
-            <td><div class="primary">0.026 ms</div><div class="compare">Chakra: FAILED <span class="delta">—</span></div><div class="compare">QuickJS: 0.134 ms <span class="delta better">+413.5%</span></div></td>
-            <td><div class="primary">1.648 ms</div><div class="compare">Chakra: FAILED <span class="delta">—</span></div><div class="compare">QuickJS: 1.138 ms <span class="delta worse">-30.9%</span></div></td>
+            <td><div class="primary">0.070 ms (0.026 - 1.648)</div><div class="compare">Chakra: FAILED <span class="delta">—</span></div><div class="compare">QuickJS: 0.287 ms (0.134 - 1.138) <span class="delta better">+309.0%</span></div></td>
         </tr><tr id="chart-js-V8-0" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -508,15 +466,12 @@
             <h2>Summary (display: QuickJS)</h2>
             <table class="metrics"><tbody><tr><th>Rounds</th><td><div class="primary">9 (9 succeeded)</div><div class="compare">Chakra: 9 (8 succeeded)</div><div class="compare">V8: 9 (9 succeeded)</div></td></tr><tr><th>Native initialization (avg)</th><td><div class="primary">2.100 ms</div><div class="compare">Chakra: 6.403 ms <span class="delta better">+204.9%</span></div><div class="compare">V8: 5.782 ms <span class="delta better">+175.3%</span></div></td></tr><tr><th>`babylon.max.js` eval (avg)</th><td><div class="primary">1070.130 ms</div><div class="compare">Chakra: 1780.929 ms <span class="delta better">+66.4%</span></div><div class="compare">V8: 439.365 ms <span class="delta worse">-58.9%</span></div></td></tr><tr><th>`babylonjs.loaders.js` eval (avg)</th><td><div class="primary">71.546 ms</div><div class="compare">Chakra: 73.435 ms <span class="delta better">+2.6%</span></div><div class="compare">V8: 35.180 ms <span class="delta worse">-50.8%</span></div></td></tr></tbody></table>
             <h2>GLB assets (display: QuickJS)</h2>
-            <table><thead><tr><th>Asset</th><th>Frames</th><th>Parse (ms)</th><th>Avg / frame (ms)</th><th>Min / frame (ms)</th><th>Max / frame (ms)</th></tr></thead><tbody><tr>
+            <table><thead><tr><th>Asset</th><th>Parse (ms)</th><th>Avg / frame (ms)</th></tr></thead><tbody><tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-QuickJS-0" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">Horse.glb</span></div><div class="compare"><span class="muted">Chakra: ok</span></div><div class="compare"><span class="muted">V8: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">593.848 ms</div><div class="compare">Chakra: 534.180 ms <span class="delta worse">-10.0%</span></div><div class="compare">V8: 834.201 ms <span class="delta better">+40.5%</span></div></td>
-            <td><div class="primary">0.934 ms</div><div class="compare">Chakra: 0.454 ms <span class="delta worse">-51.4%</span></div><div class="compare">V8: 0.220 ms <span class="delta worse">-76.4%</span></div></td>
-            <td><div class="primary">0.585 ms</div><div class="compare">Chakra: 0.275 ms <span class="delta worse">-53.0%</span></div><div class="compare">V8: 0.120 ms <span class="delta worse">-79.5%</span></div></td>
-            <td><div class="primary">2.261 ms</div><div class="compare">Chakra: 1.119 ms <span class="delta worse">-50.5%</span></div><div class="compare">V8: 0.764 ms <span class="delta worse">-66.2%</span></div></td>
+            <td><div class="primary">0.934 ms (0.585 - 2.261)</div><div class="compare">Chakra: 0.454 ms (0.275 - 1.119) <span class="delta worse">-51.4%</span></div><div class="compare">V8: 0.220 ms (0.120 - 0.764) <span class="delta worse">-76.4%</span></div></td>
         </tr><tr id="chart-glb-QuickJS-0" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -531,13 +486,10 @@
               </tr>
 <tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-QuickJS-1" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">PBR_Spheres.glb</span></div><div class="compare"><span class="muted">Chakra: ok</span></div><div class="compare"><span class="muted">V8: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">453.600 ms</div><div class="compare">Chakra: 646.236 ms <span class="delta better">+42.5%</span></div><div class="compare">V8: 306.056 ms <span class="delta worse">-32.5%</span></div></td>
-            <td><div class="primary">3.184 ms</div><div class="compare">Chakra: 1.434 ms <span class="delta worse">-55.0%</span></div><div class="compare">V8: 0.357 ms <span class="delta worse">-88.8%</span></div></td>
-            <td><div class="primary">2.139 ms</div><div class="compare">Chakra: 0.780 ms <span class="delta worse">-63.5%</span></div><div class="compare">V8: 0.194 ms <span class="delta worse">-90.9%</span></div></td>
-            <td><div class="primary">12.710 ms</div><div class="compare">Chakra: 4.414 ms <span class="delta worse">-65.3%</span></div><div class="compare">V8: 0.986 ms <span class="delta worse">-92.2%</span></div></td>
+            <td><div class="primary">3.184 ms (2.139 - 12.710)</div><div class="compare">Chakra: 1.434 ms (0.780 - 4.414) <span class="delta worse">-55.0%</span></div><div class="compare">V8: 0.357 ms (0.194 - 0.986) <span class="delta worse">-88.8%</span></div></td>
         </tr><tr id="chart-glb-QuickJS-1" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -552,13 +504,10 @@
               </tr>
 <tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-QuickJS-2" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">alien.glb</span></div><div class="compare"><span class="muted">Chakra: ok</span></div><div class="compare"><span class="muted">V8: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">1368.523 ms</div><div class="compare">Chakra: 1115.834 ms <span class="delta worse">-18.5%</span></div><div class="compare">V8: 773.104 ms <span class="delta worse">-43.5%</span></div></td>
-            <td><div class="primary">3.184 ms</div><div class="compare">Chakra: 1.297 ms <span class="delta worse">-59.3%</span></div><div class="compare">V8: 0.417 ms <span class="delta worse">-86.9%</span></div></td>
-            <td><div class="primary">2.230 ms</div><div class="compare">Chakra: 0.722 ms <span class="delta worse">-67.6%</span></div><div class="compare">V8: 0.208 ms <span class="delta worse">-90.7%</span></div></td>
-            <td><div class="primary">8.764 ms</div><div class="compare">Chakra: 11.385 ms <span class="delta better">+29.9%</span></div><div class="compare">V8: 0.910 ms <span class="delta worse">-89.6%</span></div></td>
+            <td><div class="primary">3.184 ms (2.230 - 8.764)</div><div class="compare">Chakra: 1.297 ms (0.722 - 11.385) <span class="delta worse">-59.3%</span></div><div class="compare">V8: 0.417 ms (0.208 - 0.910) <span class="delta worse">-86.9%</span></div></td>
         </tr><tr id="chart-glb-QuickJS-2" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -573,13 +522,10 @@
               </tr>
 <tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-QuickJS-3" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">boombox.glb</span></div><div class="compare"><span class="muted">Chakra: ok</span></div><div class="compare"><span class="muted">V8: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">699.605 ms</div><div class="compare">Chakra: 810.815 ms <span class="delta better">+15.9%</span></div><div class="compare">V8: 494.914 ms <span class="delta worse">-29.3%</span></div></td>
-            <td><div class="primary">1.228 ms</div><div class="compare">Chakra: 0.534 ms <span class="delta worse">-56.5%</span></div><div class="compare">V8: 0.212 ms <span class="delta worse">-82.7%</span></div></td>
-            <td><div class="primary">0.650 ms</div><div class="compare">Chakra: 0.191 ms <span class="delta worse">-70.7%</span></div><div class="compare">V8: 0.084 ms <span class="delta worse">-87.1%</span></div></td>
-            <td><div class="primary">10.011 ms</div><div class="compare">Chakra: 6.875 ms <span class="delta worse">-31.3%</span></div><div class="compare">V8: 0.666 ms <span class="delta worse">-93.4%</span></div></td>
+            <td><div class="primary">1.228 ms (0.650 - 10.011)</div><div class="compare">Chakra: 0.534 ms (0.191 - 6.875) <span class="delta worse">-56.5%</span></div><div class="compare">V8: 0.212 ms (0.084 - 0.666) <span class="delta worse">-82.7%</span></div></td>
         </tr><tr id="chart-glb-QuickJS-3" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -594,13 +540,10 @@
               </tr>
 <tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-QuickJS-4" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">face-rig-11-full-opt.glb</span></div><div class="compare"><span class="muted">Chakra: ok</span></div><div class="compare"><span class="muted">V8: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">9140.810 ms</div><div class="compare">Chakra: 2528.339 ms <span class="delta worse">-72.3%</span></div><div class="compare">V8: 995.191 ms <span class="delta worse">-89.1%</span></div></td>
-            <td><div class="primary">123.085 ms</div><div class="compare">Chakra: 30.280 ms <span class="delta worse">-75.4%</span></div><div class="compare">V8: 9.689 ms <span class="delta worse">-92.1%</span></div></td>
-            <td><div class="primary">97.577 ms</div><div class="compare">Chakra: 16.911 ms <span class="delta worse">-82.7%</span></div><div class="compare">V8: 8.379 ms <span class="delta worse">-91.4%</span></div></td>
-            <td><div class="primary">317.110 ms</div><div class="compare">Chakra: 166.604 ms <span class="delta worse">-47.5%</span></div><div class="compare">V8: 24.183 ms <span class="delta worse">-92.4%</span></div></td>
+            <td><div class="primary">123.085 ms (97.577 - 317.110)</div><div class="compare">Chakra: 30.280 ms (16.911 - 166.604) <span class="delta worse">-75.4%</span></div><div class="compare">V8: 9.689 ms (8.379 - 24.183) <span class="delta worse">-92.1%</span></div></td>
         </tr><tr id="chart-glb-QuickJS-4" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -615,13 +558,10 @@
               </tr>
 <tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-QuickJS-5" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">fish.glb</span></div><div class="compare"><span class="muted">Chakra: ok</span></div><div class="compare"><span class="muted">V8: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">3349.572 ms</div><div class="compare">Chakra: 1308.989 ms <span class="delta worse">-60.9%</span></div><div class="compare">V8: 864.024 ms <span class="delta worse">-74.2%</span></div></td>
-            <td><div class="primary">11.184 ms</div><div class="compare">Chakra: 2.392 ms <span class="delta worse">-78.6%</span></div><div class="compare">V8: 1.068 ms <span class="delta worse">-90.4%</span></div></td>
-            <td><div class="primary">8.243 ms</div><div class="compare">Chakra: 1.181 ms <span class="delta worse">-85.7%</span></div><div class="compare">V8: 0.730 ms <span class="delta worse">-91.1%</span></div></td>
-            <td><div class="primary">56.361 ms</div><div class="compare">Chakra: 36.455 ms <span class="delta worse">-35.3%</span></div><div class="compare">V8: 2.150 ms <span class="delta worse">-96.2%</span></div></td>
+            <td><div class="primary">11.184 ms (8.243 - 56.361)</div><div class="compare">Chakra: 2.392 ms (1.181 - 36.455) <span class="delta worse">-78.6%</span></div><div class="compare">V8: 1.068 ms (0.730 - 2.150) <span class="delta worse">-90.4%</span></div></td>
         </tr><tr id="chart-glb-QuickJS-5" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -636,13 +576,10 @@
               </tr>
 <tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-QuickJS-6" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">flightHelmet.glb</span></div><div class="compare"><span class="muted">Chakra: ok</span></div><div class="compare"><span class="muted">V8: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">1619.743 ms</div><div class="compare">Chakra: 1370.890 ms <span class="delta worse">-15.4%</span></div><div class="compare">V8: 904.292 ms <span class="delta worse">-44.2%</span></div></td>
-            <td><div class="primary">3.627 ms</div><div class="compare">Chakra: 1.106 ms <span class="delta worse">-69.5%</span></div><div class="compare">V8: 0.373 ms <span class="delta worse">-89.7%</span></div></td>
-            <td><div class="primary">2.437 ms</div><div class="compare">Chakra: 0.628 ms <span class="delta worse">-74.2%</span></div><div class="compare">V8: 0.211 ms <span class="delta worse">-91.3%</span></div></td>
-            <td><div class="primary">17.726 ms</div><div class="compare">Chakra: 2.676 ms <span class="delta worse">-84.9%</span></div><div class="compare">V8: 0.778 ms <span class="delta worse">-95.6%</span></div></td>
+            <td><div class="primary">3.627 ms (2.437 - 17.726)</div><div class="compare">Chakra: 1.106 ms (0.628 - 2.676) <span class="delta worse">-69.5%</span></div><div class="compare">V8: 0.373 ms (0.211 - 0.778) <span class="delta worse">-89.7%</span></div></td>
         </tr><tr id="chart-glb-QuickJS-6" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -657,13 +594,10 @@
               </tr>
 <tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-glb-QuickJS-7" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">shoe_variants.glb</span></div><div class="compare"><span class="muted">Chakra: ok</span></div><div class="compare"><span class="muted">V8: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">700.476 ms</div><div class="compare">Chakra: 765.105 ms <span class="delta better">+9.2%</span></div><div class="compare">V8: 452.559 ms <span class="delta worse">-35.4%</span></div></td>
-            <td><div class="primary">0.938 ms</div><div class="compare">Chakra: 0.467 ms <span class="delta worse">-50.2%</span></div><div class="compare">V8: 0.225 ms <span class="delta worse">-76.0%</span></div></td>
-            <td><div class="primary">0.519 ms</div><div class="compare">Chakra: 0.262 ms <span class="delta worse">-49.5%</span></div><div class="compare">V8: 0.083 ms <span class="delta worse">-84.0%</span></div></td>
-            <td><div class="primary">2.771 ms</div><div class="compare">Chakra: 1.451 ms <span class="delta worse">-47.6%</span></div><div class="compare">V8: 1.429 ms <span class="delta worse">-48.4%</span></div></td>
+            <td><div class="primary">0.938 ms (0.519 - 2.771)</div><div class="compare">Chakra: 0.467 ms (0.262 - 1.451) <span class="delta worse">-50.2%</span></div><div class="compare">V8: 0.225 ms (0.083 - 1.429) <span class="delta worse">-76.0%</span></div></td>
         </tr><tr id="chart-glb-QuickJS-7" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -677,15 +611,12 @@
                   </td>
               </tr></tbody></table>
             <h2>JS assets (display: QuickJS)</h2>
-            <table><thead><tr><th>Asset</th><th>Frames</th><th>Parse (ms)</th><th>Avg / frame (ms)</th><th>Min / frame (ms)</th><th>Max / frame (ms)</th></tr></thead><tbody><tr>
+            <table><thead><tr><th>Asset</th><th>Parse (ms)</th><th>Avg / frame (ms)</th></tr></thead><tbody><tr>
             <td><div class="primary asset"><button type="button" class="chart-toggle" data-target="chart-js-QuickJS-0" aria-expanded="false" title="Show / hide per-frame timing graph">▶ Graph</button><span class="asset-name">fullscreen-shader.js</span></div><div class="compare"><span class="muted">Chakra: FAILED</span></div><div class="compare"><span class="muted">V8: ok</span></div></td>
-            <td><div class="primary">3000</div></td>
             <td><div class="primary">164.587 ms</div><div class="compare">Chakra: FAILED <span class="delta">—</span></div><div class="compare">V8: 123.274 ms <span class="delta worse">-25.1%</span></div></td>
-            <td><div class="primary">0.287 ms</div><div class="compare">Chakra: FAILED <span class="delta">—</span></div><div class="compare">V8: 0.070 ms <span class="delta worse">-75.6%</span></div></td>
-            <td><div class="primary">0.134 ms</div><div class="compare">Chakra: FAILED <span class="delta">—</span></div><div class="compare">V8: 0.026 ms <span class="delta worse">-80.5%</span></div></td>
-            <td><div class="primary">1.138 ms</div><div class="compare">Chakra: FAILED <span class="delta">—</span></div><div class="compare">V8: 1.648 ms <span class="delta better">+44.8%</span></div></td>
+            <td><div class="primary">0.287 ms (0.134 - 1.138)</div><div class="compare">Chakra: FAILED <span class="delta">—</span></div><div class="compare">V8: 0.070 ms (0.026 - 1.648) <span class="delta worse">-75.6%</span></div></td>
         </tr><tr id="chart-js-QuickJS-0" class="chart-row" hidden>
-                  <td colspan="6" class="chart-cell">
+                  <td colspan="3" class="chart-cell">
                     <svg class="chart" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <rect x="44.0" y="8" width="274.8" height="110" class="chart-warmup"/>
         <line x1="44" y1="118" x2="868" y2="118" class="chart-axis"/>
@@ -700,7 +631,7 @@
               </tr></tbody></table>
         </section>
 
-<p class="footer">Generated by <code>perf-report.js</code> from <code>result-&lt;engine&gt;.json</code> files (schema v2). Engines found: Chakra, V8, QuickJS. Frame budget per asset: 1000 warmup + (total − 1000) timed.</p>
+<p class="footer">Generated by <code>perf-report.js</code> from <code>result-&lt;engine&gt;.json</code> files (schema v2). Engines found: Chakra, V8, QuickJS.</p>
 
 <script>
 (function () {
