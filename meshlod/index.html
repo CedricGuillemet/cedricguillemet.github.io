@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="data:," />
+        <title>MeshLoD Browser Converter</title>
+        <link rel="stylesheet" href="app.css" />
+    </head>
+    <body>
+        <main class="app-shell">
+            <div class="titlebar" aria-hidden="true">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="window-title">MeshLoD Browser Converter</div>
+            </div>
+
+            <header class="app-header">
+                <div class="brand">
+                    <div class="brand-mark">ML</div>
+                    <div>
+                        <h1>MeshLoD Browser Converter</h1>
+                        <p>Prepare local glTF assets for streamed clustered level of detail.</p>
+                    </div>
+                </div>
+                <div class="build-badge" id="buildBadge" data-testid="build-badge">local files only · single-threaded</div>
+            </header>
+
+            <div class="workspace">
+                <section class="column" aria-labelledby="input-heading">
+                    <div class="column-heading">
+                        <h2 id="input-heading">Input resources</h2>
+                        <span class="step">01 / 03</span>
+                    </div>
+
+                    <div id="dropZone" class="drop-zone" aria-describedby="drop-help" data-testid="drop-zone">
+                        <div>
+                            <div class="drop-icon" aria-hidden="true">⇧</div>
+                            <strong>Drop a GLB or a complete glTF file set</strong>
+                            <p id="drop-help">For .gltf, include every referenced local .bin and texture in the same selection.</p>
+                            <button id="pickFiles" class="button" type="button" data-testid="pick-files-button">Choose local files</button>
+                            <input
+                                id="filePicker"
+                                class="hidden-input"
+                                type="file"
+                                accept=".glb,.gltf,.bin,.png,.jpg,.jpeg,.ktx2,.webp"
+                                multiple
+                                data-testid="file-input" />
+                            <div class="helper">Embedded resources and data URIs are supported. HTTP(S) and absolute resource URIs are not fetched.</div>
+                        </div>
+                    </div>
+
+                    <section class="resource-panel" aria-labelledby="resource-heading">
+                        <div class="section-title">
+                            <h3 id="resource-heading">Selected files</h3>
+                            <span id="resourceCount" class="count-badge" data-testid="resource-count">0 files</span>
+                        </div>
+                        <div id="resourceList" class="resource-list" data-testid="resource-list"></div>
+                        <div id="inputSummary" class="input-summary" data-testid="input-summary"></div>
+                        <button
+                            id="clearFiles"
+                            class="button ghost"
+                            type="button"
+                            style="width: 100%; margin-top: 10px"
+                            data-testid="clear-files-button">
+                            Clear selection
+                        </button>
+                    </section>
+                </section>
+
+                <section class="column" aria-labelledby="options-heading">
+                    <div class="column-heading">
+                        <h2 id="options-heading">Conversion options</h2>
+                        <span class="step">02 / 03</span>
+                    </div>
+                    <p class="options-intro">
+                        Canonical defaults mirror the native converter. Advanced values stay deterministic and are embedded in output metadata.
+                    </p>
+
+                    <div class="preset-row" aria-label="Option presets" data-testid="preset-row">
+                        <button class="button is-active" type="button" data-preset="canonical" data-testid="preset-canonical">Canonical</button>
+                        <button class="button" type="button" data-preset="compact" data-testid="preset-compact">Compact</button>
+                        <button class="button" type="button" data-preset="fine" data-testid="preset-fine">Fine detail</button>
+                    </div>
+
+                    <div class="option-group">
+                        <h3>Primitive selection</h3>
+                        <div class="option-grid">
+                            <div class="field">
+                                <label for="meshSelect">Mesh <code>--mesh</code></label>
+                                <select id="meshSelect" data-testid="option-mesh">
+                                    <option value="all">All meshes</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="primitiveSelect">Primitive <code>--primitive</code></label>
+                                <select id="primitiveSelect" disabled data-testid="option-primitive">
+                                    <option value="all">All primitives</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field-note">Selecting a primitive requires a specific mesh. Each selected primitive becomes one .mlod output.</div>
+                    </div>
+
+                    <div class="option-group">
+                        <h3>Meshlets &amp; hierarchy</h3>
+                        <div class="option-grid">
+                            <div class="field">
+                                <label for="maxVertices">Max vertices <code>4&ndash;256</code></label>
+                                <input id="maxVertices" type="number" min="4" max="256" step="1" value="64" data-testid="option-max-vertices" />
+                            </div>
+                            <div class="field">
+                                <label for="minTriangles">Min triangles <code>4&ndash;256</code></label>
+                                <input id="minTriangles" type="number" min="4" max="256" step="1" value="40" data-testid="option-min-triangles" />
+                            </div>
+                            <div class="field">
+                                <label for="maxTriangles">Max triangles <code>4&ndash;256</code></label>
+                                <input id="maxTriangles" type="number" min="4" max="256" step="1" value="124" data-testid="option-max-triangles" />
+                            </div>
+                            <div class="field">
+                                <label for="partitionSize">Partition size <code>2&ndash;32</code></label>
+                                <input id="partitionSize" type="number" min="2" max="32" step="1" value="8" data-testid="option-partition-size" />
+                            </div>
+                            <div class="field">
+                                <label for="simplifyRatio">Simplify ratio <code>0&ndash;1</code></label>
+                                <input id="simplifyRatio" type="number" min="0" max="1" step="0.05" value="0.5" data-testid="option-simplify-ratio" />
+                            </div>
+                            <div class="field">
+                                <label for="simplifyThreshold">Simplify threshold <code>0&ndash;1</code></label>
+                                <input
+                                    id="simplifyThreshold"
+                                    type="number"
+                                    min="0"
+                                    max="1"
+                                    step="0.05"
+                                    value="0.85"
+                                    data-testid="option-simplify-threshold" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-group">
+                        <h3>Streaming pages</h3>
+                        <div class="option-grid">
+                            <div class="field">
+                                <label for="pageMin">Minimum KiB <code>64&ndash;256</code></label>
+                                <select id="pageMin" data-testid="option-page-min">
+                                    <option>64</option>
+                                    <option>128</option>
+                                    <option>192</option>
+                                    <option>256</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="pageTarget">Target KiB <code>64&ndash;256</code></label>
+                                <select id="pageTarget" data-testid="option-page-target">
+                                    <option>64</option>
+                                    <option selected>128</option>
+                                    <option>192</option>
+                                    <option>256</option>
+                                </select>
+                            </div>
+                            <div class="field full">
+                                <label for="pageMax">Maximum KiB <code>64&ndash;256</code></label>
+                                <select id="pageMax" data-testid="option-page-max">
+                                    <option>64</option>
+                                    <option>128</option>
+                                    <option>192</option>
+                                    <option selected>256</option>
+                                </select>
+                                <div class="field-note">Page sizes are 64 KiB multiples and must satisfy minimum &le; target &le; maximum.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <label class="inline-check">
+                        <input id="includeStats" type="checkbox" checked data-testid="option-include-stats" />
+                        <span>Include canonical conversion metadata and statistics in the download package.</span>
+                    </label>
+
+                    <div id="preflight" class="preflight" role="status" aria-live="polite" data-testid="preflight">
+                        Select a local asset to estimate the peak working set.
+                    </div>
+                    <div id="optionError" class="alert error" role="alert" data-testid="option-error" hidden></div>
+
+                    <div class="convert-actions">
+                        <button id="convertButton" class="button primary" type="button" disabled data-testid="convert-button">Convert</button>
+                        <button id="cancelButton" class="button ghost" type="button" hidden data-testid="cancel-button">Cancel</button>
+                        <button id="resetOptions" class="button ghost" type="button" data-testid="reset-button">Reset</button>
+                    </div>
+                </section>
+
+                <section class="column" aria-labelledby="result-heading">
+                    <div class="column-heading">
+                        <h2 id="result-heading">Conversion status</h2>
+                        <span class="step">03 / 03</span>
+                    </div>
+                    <div id="statusCard" class="status-card" aria-live="polite" data-testid="status-card"></div>
+                </section>
+            </div>
+        </main>
+        <div id="announcer" class="visually-hidden" role="status" aria-live="assertive" data-testid="announcer"></div>
+        <script type="module" src="app.js"></script>
+    </body>
+</html>
