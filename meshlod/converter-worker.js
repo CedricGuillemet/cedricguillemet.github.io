@@ -2,7 +2,7 @@
 //
 // Owns: Emscripten module initialization, the virtual file set, the ABI
 // session, inspection, conversion, and atomic download packaging (direct
-// `.mlod` or a deterministic ZIP32 STORE package -- architecture 7.15).
+// deterministic self-contained ZIP32 STORE package -- architecture 7.15).
 // Conversion progress is relayed from the module's imported `onProgress`
 // hook (wasm_api.cpp's `mlod_report_progress_js`), throttled per
 // architecture 7.14. There is no cooperative in-flight cancellation here --
@@ -106,6 +106,7 @@ let session = {
     options: null,
     versionReport: null,
 };
+let operationQueue = Promise.resolve();
 
 async function loadModule() {
     if (modulePromise) {
@@ -287,6 +288,7 @@ async function handleInspect(payload) {
 
     destroySession(Module);
     session.handle = Module.ccall("mlod_session_create", "number", [], []);
+    session.files = new Map(files.map((file) => [file.path, file]));
     session.entryName = files.find((file) => file.isEntry)?.path ?? null;
     session.options = options;
     if (session.handle === 0) {
@@ -374,7 +376,7 @@ function copyOutputBytes(Module, handle, index) {
  * embedded in the conversion report) are included only when `includeStats`
  * is true; the minimal mapping/provenance fields are always present.
  */
-function buildMetadataObject({ entryName, options, includeStats, versionReport, report, entries }) {
+function buildMetadataObject({ sourceEntryName, options, includeStats, versionReport, report, entries, sourceEntries }) {
     const detailedOutputs = includeStats && report.metadata && Array.isArray(report.metadata.outputs) ? report.metadata.outputs : null;
     const outputs = entries.map((entry, index) => {
         const base = {
@@ -390,10 +392,12 @@ function buildMetadataObject({ entryName, options, includeStats, versionReport, 
     });
     const totalByteSize = entries.reduce((sum, entry) => sum + entry.byteSize, 0);
     return {
+        packageVersion: 1,
         formatVersion: versionReport?.formatVersion ?? null,
         toolVersion: versionReport?.toolVersion ?? null,
         dependencies: versionReport?.dependencies ?? null,
-        sourceEntryName: entryName ?? null,
+        sourceEntryName: sourceEntryName ? `source/${sourceEntryName}` : null,
+        sourceFiles: sourceEntries.map((entry) => ({ name: entry.name, byteSize: entry.bytes.length })),
         sourceDigestHex: report.sourceDigestHex ?? null,
         options: options ?? null,
         outputs,
@@ -406,14 +410,12 @@ function buildMetadataObject({ entryName, options, includeStats, versionReport, 
 }
 
 /**
- * Assembles the final downloadable package: a direct `.mlod` for a single
- * output (no sibling metadata -- its provenance is already embedded), or a
- * deterministic ZIP32 STORE package (source-order `.mlod` entries followed
- * by `conversion-metadata.json`) for multiple outputs, self-verified before
- * ever being offered for download. Any failure throws -- the caller treats
- * that as one atomic packaging failure with zero published Blob.
+ * Assembles a self-contained deterministic ZIP32 STORE package containing the
+ * original source glTF resources, source-order `.mlod` entries, and
+ * `conversion-metadata.json`. The package is self-verified before it is offered
+ * for download and can be dropped directly into the MeshLoD viewer demo.
  */
-function buildDownloadPackage(Module, handle, { entryName, options, includeStats, versionReport, report }) {
+async function buildDownloadPackage(Module, handle, { entryName, sourceEntryName, options, includeStats, versionReport, report }) {
     const stem = deriveOutputStem(entryName || "mesh-lod");
     const entries = report.outputs.map((output, index) => ({
         name: primitiveOutputName(stem, output.meshIndex, output.primitiveIndex),
@@ -422,18 +424,14 @@ function buildDownloadPackage(Module, handle, { entryName, options, includeStats
         primitiveIndex: output.primitiveIndex,
         byteSize: output.byteSize,
     }));
-
-    if (entries.length === 1) {
-        return {
-            name: entries[0].name,
-            mimeType: "application/octet-stream",
-            blob: new Blob([entries[0].bytes], { type: "application/octet-stream" }),
-        };
-    }
-
-    const metadata = buildMetadataObject({ entryName, options, includeStats, versionReport, report, entries });
+    const sourceEntries = await Promise.all(
+        [...session.files.values()]
+            .sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0))
+            .map(async (file) => ({ name: `source/${file.path}`, bytes: new Uint8Array(await file.blob.arrayBuffer()) }))
+    );
+    const metadata = buildMetadataObject({ sourceEntryName, options, includeStats, versionReport, report, entries, sourceEntries });
     const metadataBytes = new TextEncoder().encode(JSON.stringify(metadata, null, 2));
-    const zipEntries = [...entries.map((entry) => ({ name: entry.name, bytes: entry.bytes })), { name: METADATA_ENTRY_NAME, bytes: metadataBytes }];
+    const zipEntries = [...sourceEntries, ...entries.map((entry) => ({ name: entry.name, bytes: entry.bytes })), { name: METADATA_ENTRY_NAME, bytes: metadataBytes }];
     const zipBytes = buildZipStore(zipEntries);
     verifyZipStore(zipBytes, zipEntries); // throws on any mismatch -- never offered if this fails
     return {
@@ -504,8 +502,9 @@ async function handleConvert(payload) {
 
     let download;
     try {
-        download = buildDownloadPackage(Module, session.handle, {
+        download = await buildDownloadPackage(Module, session.handle, {
             entryName: entryName ?? session.entryName,
+            sourceEntryName: session.entryName,
             options: session.options,
             includeStats: Boolean(includeStats),
             versionReport: session.versionReport,
@@ -528,30 +527,36 @@ async function handleConvert(payload) {
     post({ type: "success", protocolVersion: PROTOCOL_VERSION, attemptId, report, download });
 }
 
-function handleClear() {
-    loadModule()
-        .then((Module) => destroySession(Module))
-        .catch(() => {
-            session = { handle: 0, files: new Map(), entryName: null, options: null, versionReport: session.versionReport };
-        });
+async function handleClear() {
+    try {
+        destroySession(await loadModule());
+    } catch {
+        session = { handle: 0, files: new Map(), entryName: null, options: null, versionReport: session.versionReport };
+    }
+}
+
+function enqueueOperation(operation) {
+    operationQueue = operationQueue.then(operation, operation);
 }
 
 self.addEventListener("message", (event) => {
     const message = event.data ?? {};
-    switch (message.type) {
-        case "initialize":
-            void handleInitialize();
-            break;
-        case "inspect":
-            void handleInspect(message);
-            break;
-        case "convert":
-            void handleConvert(message);
-            break;
-        case "clear":
-            handleClear();
-            break;
-        default:
-            break;
-    }
+    enqueueOperation(async () => {
+        switch (message.type) {
+            case "initialize":
+                await handleInitialize();
+                break;
+            case "inspect":
+                await handleInspect(message);
+                break;
+            case "convert":
+                await handleConvert(message);
+                break;
+            case "clear":
+                await handleClear();
+                break;
+            default:
+                break;
+        }
+    });
 });
