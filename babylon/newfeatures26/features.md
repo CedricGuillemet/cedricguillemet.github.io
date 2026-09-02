@@ -2,10 +2,6 @@
 
 output: CLI + light JS decoder
 
-\- animation interpolation/sculpting : https://www.youtube.com/watch?v=Juq0nQH2lwc Pure exploration. not sure of the outcome. interesting approach for animation compression as well (only save key frames, interpolate a loading time). mixing with physics like Cascadeur software
-
-output: online editor with animation output(gltf, .Babylon)
-
 \- building and cityplan editor : https://www.artstation.com/artwork/rzEvxO building editor. pleasure of using a procedural editor to make nice sharable content
 
 output: online editor and JS runtime
@@ -18,11 +14,11 @@ output: editor and gltf/.Babylon output
 
 output: NGE extension or custom tool + runtime
 
-\- content browser (asset source browser and scene creation tool). have asset sources (Babylon, asset pack...). create a scene by drag\&drop of assets. kitbash scene (add env, mesh,...) and let user add script.
+\- AI-first content browser (asset source browser and scene creation tool). Start by prompting a complete scene, then iterate with AI and tweak the result using standard selection, placement, and gizmo tools. Have asset sources (Babylon, asset packs, community libraries, local folders) to keep generation coherent. Create and refine a kitbashed scene (add environment, meshes, probes, and scripts) while keeping creators in control. Use `html/assets/scene-builder.png`, `html/assets/asset-pack-picker.png`, and `html/assets/environment-probes.png`.
 
 output: inspector extension
 
-\- mesh destruction editor/preview (setup rules for destruction, apply at runtime). fruit ninja, cut walking character, ... core principle is to duplicate a clipped mesh while keeping some attributes. easy to produce fun and impactful demos https://babylonjs.com/lite-demos/demo-break-meshes.html. add fruit ninja gif.
+\- mesh destruction editor/preview (setup rules for destruction, apply at runtime). fruit ninja, cut walking character, ... core principle is to duplicate a clipped mesh while keeping some attributes. easy to produce fun and impactful demos https://babylonjs.com/lite-demos/demo-break-meshes.html. Use `html/assets/destruction-preview.png` as the main visual and keep the Fruit Ninja gif.
 
 output: runtime + demo examples
 

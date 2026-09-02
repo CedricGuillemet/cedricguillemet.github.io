@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#09090d">
-  <meta name="description" content="Eight feature explorations for the next year of Babylon.js and Babylon Lite.">
+  <meta name="description" content="Seven feature explorations for the next year of Babylon.js and Babylon Lite.">
   <title>Babylon.js — New Frontiers 2026</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%2309090d'/%3E%3Cpath d='M16 5 27 16 16 27 5 16Z' fill='none' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
@@ -16,7 +16,7 @@
       <span>BABYLON.JS <b>/ NEW FRONTIERS</b></span>
     </a>
     <div class="topbar-actions">
-      <span class="slide-counter" aria-live="polite"><b id="current-slide">01</b> / 08</span>
+      <span class="slide-counter" aria-live="polite"><b id="current-slide">01</b> / 07</span>
       <button class="icon-button" id="fullscreen" type="button" aria-label="Toggle fullscreen" title="Toggle fullscreen">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
       </button>
@@ -25,13 +25,12 @@
 
   <nav class="rail" aria-label="Feature navigation">
     <a href="#neural-textures" aria-label="Neural texture compression"><span>01</span></a>
-    <a href="#animation-sculpting" aria-label="Animation interpolation and sculpting"><span>02</span></a>
-    <a href="#city-builder" aria-label="Building and city plan editor"><span>03</span></a>
-    <a href="#physics-rig" aria-label="Physics rig editor"><span>04</span></a>
-    <a href="#pcg-tools" aria-label="Procedural content generation tools"><span>05</span></a>
-    <a href="#content-browser" aria-label="Content browser"><span>06</span></a>
-    <a href="#mesh-destruction" aria-label="Mesh destruction editor"><span>07</span></a>
-    <a href="#meshblend" aria-label="Mesh blending"><span>08</span></a>
+    <a href="#city-builder" aria-label="Building and city plan editor"><span>02</span></a>
+    <a href="#physics-rig" aria-label="Physics rig editor"><span>03</span></a>
+    <a href="#pcg-tools" aria-label="Procedural content generation tools"><span>04</span></a>
+    <a href="#content-browser" aria-label="Content browser"><span>05</span></a>
+    <a href="#mesh-destruction" aria-label="Mesh destruction editor"><span>06</span></a>
+    <a href="#meshblend" aria-label="Mesh blending"><span>07</span></a>
   </nav>
 
   <main>
@@ -61,28 +60,9 @@
       </figure>
     </section>
 
-    <section class="slide slide-animation" id="animation-sculpting" data-index="2">
-      <div class="ambient ambient-violet"></div>
+    <section class="slide slide-city" id="city-builder" data-index="2">
       <div class="slide-copy">
-        <p class="eyebrow"><span>02</span> Animation / R&amp;D</p>
-        <h1>Sculpt motion,<br><em>not keyframes</em></h1>
-        <p class="lede">Interpolate sparse poses at load time, then let artists shape the motion and mix it with physics. A playful path toward smaller clips and more expressive animation.</p>
-        <div class="pill-row"><span>POSE INTERPOLATION</span><span>COMPRESSION</span><span>PHYSICS MIXING</span></div>
-        <div class="deliverable"><b>DELIVERABLE</b><span>Online editor + glTF / .babylon animation export</span></div>
-        <div class="actions">
-          <a class="source-link" href="https://www.youtube.com/watch?v=Juq0nQH2lwc" target="_blank" rel="noreferrer">Open reference video <span>↗</span></a>
-          <span class="scope">BABYLON.JS · PURE EXPLORATION</span>
-        </div>
-      </div>
-      <div class="feature-media video-card">
-        <img src="assets/slide-02-animation.gif" alt="Motion sculpting demonstration extracted from 13:10 to 13:20 of the reference talk" loading="lazy">
-        <div class="clip-range"><b>REFERENCE EXTRACT</b><span><i></i></span><time>13:10 — 13:20</time></div>
-      </div>
-    </section>
-
-    <section class="slide slide-city" id="city-builder" data-index="3">
-      <div class="slide-copy">
-        <p class="eyebrow"><span>03</span> Creation tools</p>
+        <p class="eyebrow"><span>02</span> Creation tools</p>
         <h1>Build a city.<br><em>Keep the joy.</em></h1>
         <p class="lede">A procedural building and city-plan editor that accelerates layout without automating away creative decisions. Modular kits become fast, beautiful, shareable worlds.</p>
         <div class="workflow">
@@ -101,10 +81,10 @@
       </figure>
     </section>
 
-    <section class="slide slide-rig" id="physics-rig" data-index="4">
+    <section class="slide slide-rig" id="physics-rig" data-index="3">
       <div class="ambient ambient-orange"></div>
       <div class="slide-copy">
-        <p class="eyebrow"><span>04</span> Animation / Physics</p>
+        <p class="eyebrow"><span>03</span> Animation / Physics</p>
         <h1>Rig once.<br><em>React forever.</em></h1>
         <p class="lede">Author physicalized bones alongside animation: tails, hair strands, straps, backpacks. Movement gains weight and variation without hand-keying every response.</p>
         <div class="callouts">
@@ -138,10 +118,10 @@
       </div>
     </section>
 
-    <section class="slide slide-pcg" id="pcg-tools" data-index="5">
+    <section class="slide slide-pcg" id="pcg-tools" data-index="4">
       <div class="ambient ambient-green"></div>
       <div class="slide-copy">
-        <p class="eyebrow"><span>05</span> Procedural creation</p>
+        <p class="eyebrow"><span>04</span> Procedural creation</p>
         <h1>Rules in.<br><em>Worlds out.</em></h1>
         <p class="lede">Scatter and shape scenes with readable rules—inside NGE or a focused editor. Compose placement, raycasts, splines, physics, and particles into a fast world-building loop.</p>
         <blockquote><code>instantiate(tree)</code><br><code>where hit.normal.y &gt; 0.72</code><br><code>with random.scale(0.8, 1.3)</code></blockquote>
@@ -167,41 +147,30 @@
       </div>
     </section>
 
-    <section class="slide slide-browser" id="content-browser" data-index="6">
+    <section class="slide slide-browser" id="content-browser" data-index="5">
       <div class="slide-copy">
-        <p class="eyebrow"><span>06</span> Asset workflow</p>
-        <h1>Find it.<br><em>Drop it. Build.</em></h1>
-        <p class="lede">Connect Babylon, asset packs, community libraries, or local folders. Drag assets into a kitbashed scene, add behavior scripts, and go from idea to running world in seconds.</p>
-        <div class="pill-row"><span>ADD SOURCES</span><span>SEARCH</span><span>PREVIEW</span><span>DRAG &amp; DROP</span></div>
+        <p class="eyebrow"><span>05</span> AI-first scene creation</p>
+        <h1>Prompt it.<br><em>Then make it yours.</em></h1>
+        <p class="lede">Start by prompting a complete scene, then iterate with AI and tweak every result using familiar selection, placement, and gizmo tools. Asset packs keep generation coherent while standard editing keeps creators in control.</p>
+        <div class="pill-row"><span>PROMPT A SCENE</span><span>ITERATE WITH AI</span><span>TWEAK WITH GIZMOS</span></div>
         <div class="deliverable"><b>DELIVERABLE</b><span>Inspector extension</span></div>
         <div class="actions">
           <span class="source-link static">SOURCE → SCENE</span>
           <span class="scope">BABYLON.JS + LITE · EDITOR</span>
         </div>
       </div>
-      <div class="feature-media browser-window" aria-label="Content browser mockup">
-        <div class="window-bar"><i></i><i></i><i></i><span>CONTENT / ENVIRONMENT</span></div>
-        <div class="browser-body">
-          <aside><b>LIBRARY</b><span class="selected">Environment</span><span>Characters</span><span>Materials</span><span>My assets</span><b>SOURCES</b><span>Babylon</span><span>Community</span><span>Local</span></aside>
-          <div class="asset-area">
-            <label><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg><span>Search assets...</span><kbd>⌘ K</kbd></label>
-            <div class="asset-grid">
-              <article class="asset rock dragging"><div></div><b>Cliff Rock 04</b><span>DRAG TO SCENE →</span></article>
-              <article class="asset tree"><div></div><b>Pine Cluster</b><span>GLB · 12.4 MB</span></article>
-              <article class="asset crate"><div></div><b>Industrial Crate</b><span>GLB · 2.1 MB</span></article>
-              <article class="asset arch"><div></div><b>Stone Arch</b><span>GLB · 5.8 MB</span></article>
-              <article class="asset material"><div></div><b>Mossy Ground</b><span>MAT · 14 MB</span></article>
-              <article class="asset plus"><div>+</div><b>Add source</b><span>URL OR LOCAL</span></article>
-            </div>
-          </div>
-        </div>
-      </div>
+      <figure class="feature-media browser-gallery">
+        <img class="browser-gallery-main" src="assets/scene-builder.png" alt="Scene builder showing a modular sci-fi environment assembled with standard editor tools" loading="lazy">
+        <img src="assets/asset-pack-picker.png" alt="Asset pack picker with several themed content libraries" loading="lazy">
+        <img src="assets/environment-probes.png" alt="Environment probe editor over the assembled sci-fi scene" loading="lazy">
+        <figcaption>AI-FIRST GENERATION · STANDARD EDITOR CONTROL</figcaption>
+      </figure>
     </section>
 
-    <section class="slide slide-destruction" id="mesh-destruction" data-index="7">
+    <section class="slide slide-destruction" id="mesh-destruction" data-index="6">
       <div class="ambient ambient-red"></div>
       <div class="slide-copy">
-        <p class="eyebrow"><span>07</span> Geometry / Impact</p>
+        <p class="eyebrow"><span>06</span> Geometry / Impact</p>
         <h1>Make every cut<br><em>matter.</em></h1>
         <p class="lede">An editor to define destruction rules and preview them before runtime. Duplicate clipped geometry while preserving attributes—then turn a slice into a memorable interaction.</p>
         <div class="pill-row"><span>CLIP</span><span>CAP</span><span>PRESERVE ATTRIBUTES</span><span>PREVIEW</span></div>
@@ -211,30 +180,9 @@
           <span class="scope">BABYLON.JS · EDITOR + RUNTIME</span>
         </div>
       </div>
-      <div class="feature-media destruction-visual" aria-label="Mesh slicing diagram">
+      <div class="feature-media destruction-visual" aria-label="Mesh destruction preview">
         <div class="destruction-stage">
-          <svg viewBox="0 0 760 560" role="img" aria-label="A mesh split into two clipped halves by a cutting plane">
-            <defs>
-              <linearGradient id="mesh-face" x1="0" x2="1"><stop stop-color="#2b303b"/><stop offset="1" stop-color="#11151c"/></linearGradient>
-              <filter id="cut-glow"><feGaussianBlur stdDeviation="8" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            </defs>
-            <g class="mesh-half left-half">
-              <path d="M85 166 317 92l61 112-46 246L91 385Z"/>
-              <path d="M85 166 233 245l99 205L91 385ZM317 92l-84 153 145-41Z"/>
-              <path d="m233 245 145-41-46 246Z" class="cut-face"/>
-            </g>
-            <g class="mesh-half right-half">
-              <path d="m423 204 61-112 232 74-6 219-241 65Z"/>
-              <path d="m423 204 145 41-99 205Zm61-112 84 153 148-79Z"/>
-              <path d="m423 204 145 41-99 205Z" class="cut-face"/>
-            </g>
-            <g class="mesh-wire">
-              <path d="M85 166 317 92l61 112-46 246L91 385Zm0 0 148 79 99 205m-99-205 84-153m61 112-145 41"/>
-              <path d="m423 204 61-112 232 74-6 219-241 65Zm0 0 145 41 142 140m-142-140-84-153m-15 358 99-205 148-79"/>
-            </g>
-            <path class="cut-plane" d="m391 43-58 472" filter="url(#cut-glow)"/>
-            <text x="287" y="536">DUPLICATE · CLIP · CAP · KEEP UV / NORMAL / SKIN</text>
-          </svg>
+          <img class="destruction-preview" src="assets/destruction-preview.png" alt="Destructible objects split into fragments in a Babylon scene">
           <figure class="fruit-gif">
             <img src="https://media1.giphy.com/media/l0ExaFmh2gdSywoFi/giphy.gif" alt="Fruit Ninja gameplay showing fruit slicing" loading="lazy">
             <figcaption>FRUIT NINJA · VIA GIPHY</figcaption>
@@ -244,10 +192,10 @@
       </div>
     </section>
 
-    <section class="slide slide-mesh" id="meshblend" data-index="8">
+    <section class="slide slide-mesh" id="meshblend" data-index="7">
       <div class="ambient ambient-gold"></div>
       <div class="slide-copy">
-        <p class="eyebrow"><span>08</span> Rendering / Geometry</p>
+        <p class="eyebrow"><span>07</span> Rendering / Geometry</p>
         <h1>Make the seam<br><em>disappear.</em></h1>
         <p class="lede">MeshBlend has been on the list for years. Explore an SSAO-inspired screen-space neighborhood pass that blends nearby color instead of darkening intersections.</p>
         <div class="split-features">
@@ -268,7 +216,7 @@
     </section>
   </main>
 
-  <footer class="hint"><span>SCROLL / ARROWS</span><i></i><span>8 IDEAS · 1 YEAR</span></footer>
+  <footer class="hint"><span>SCROLL / ARROWS</span><i></i><span>7 IDEAS · 1 YEAR</span></footer>
   <script src="script.js"></script>
 </body>
 </html>
