@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#09090d">
-  <meta name="description" content="Seven feature explorations for the next year of Babylon.js and Babylon Lite.">
+  <meta name="theme-color" content="#211a3a">
+  <meta name="description" content="Six Babylon.js feature explorations for 2026.">
   <title>Babylon.js — New Frontiers 2026</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%2309090d'/%3E%3Cpath d='M16 5 27 16 16 27 5 16Z' fill='none' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 29 9v14l-13 7L3 23V9Z' fill='%23ed684a'/%3E%3Cpath d='m16 8 7 4v8l-7 4-7-4v-8Z' fill='none' stroke='white' stroke-width='3'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="#neural-textures" aria-label="Babylon.js New Frontiers">
+    <a class="brand" href="#title" aria-label="Babylon.js New Frontiers">
       <span class="brand-mark"></span>
       <span>BABYLON.JS <b>/ NEW FRONTIERS</b></span>
     </a>
@@ -23,112 +23,40 @@
     </div>
   </header>
 
-  <nav class="rail" aria-label="Feature navigation">
-    <a href="#neural-textures" aria-label="Neural texture compression"><span>01</span></a>
-    <a href="#city-builder" aria-label="Building and city plan editor"><span>02</span></a>
-    <a href="#physics-rig" aria-label="Physics rig editor"><span>03</span></a>
-    <a href="#pcg-tools" aria-label="Procedural content generation tools"><span>04</span></a>
-    <a href="#content-browser" aria-label="Content browser"><span>05</span></a>
-    <a href="#mesh-destruction" aria-label="Mesh destruction editor"><span>06</span></a>
-    <a href="#meshblend" aria-label="Mesh blending"><span>07</span></a>
+  <nav class="rail" aria-label="Presentation navigation">
+    <a href="#title" aria-label="Title"><span>01</span></a>
+    <a href="#pcg-tools" aria-label="Procedural content generation tools"><span>02</span></a>
+    <a href="#content-browser" aria-label="AI-first content browser"><span>03</span></a>
+    <a href="#mesh-destruction" aria-label="Mesh destruction editor"><span>04</span></a>
+    <a href="#physics-rig" aria-label="Physics rig editor"><span>05</span></a>
+    <a href="#neural-textures" aria-label="Neural texture compression"><span>06</span></a>
+    <a href="#virtual-geometry" aria-label="Virtual geometry"><span>07</span></a>
   </nav>
 
   <main>
-    <section class="slide slide-neural" id="neural-textures" data-index="1">
-      <div class="ambient ambient-cyan"></div>
-      <div class="slide-copy">
-        <p class="eyebrow"><span>01</span> Rendering / R&amp;D</p>
-        <h1>Neural texture<br><em>compression</em></h1>
-        <p class="lede">A neural texture stores learned latent data instead of final pixels. A tiny shader decoder reconstructs the PBR channels at runtime—trading texture memory for lightweight inference.</p>
-        <div class="neural-flow" aria-label="How neural textures work">
-          <div><b>01 / TRAIN</b><span>Learn patterns shared by albedo, normal, and roughness.</span></div>
-          <i>→</i>
-          <div><b>02 / STORE</b><span>Keep compact latent textures plus decoder weights.</span></div>
-          <i>→</i>
-          <div><b>03 / SHADE</b><span>Reconstruct material channels on the GPU when sampled.</span></div>
-        </div>
-        <div class="deliverable"><b>DELIVERABLE</b><span>CLI + lightweight JavaScript decoder</span></div>
-        <div class="actions">
-          <a class="source-link" href="https://www.ubisoft.com/fr-fr/news/ignt.58488/shipping-neural-texture-compression-in-assassin-s-creed-mirage" target="_blank" rel="noreferrer">Read Ubisoft research <span>↗</span></a>
-          <span class="scope">BABYLON.JS · EXPLORATION</span>
-        </div>
+    <section class="slide title-slide" id="title" data-index="1">
+      <div class="light-trails" aria-hidden="true"></div>
+      <div class="title-lockup">
+        <div class="hero-mark" aria-hidden="true"><span></span></div>
+        <p class="title-kicker">BABYLON.JS · FEATURE EXPLORATIONS</p>
+        <h1>New <em>Frontiers</em></h1>
+        <p class="title-year">2026</p>
+        <p class="title-subtitle">Six ideas to make complex web experiences simpler to create, richer to explore, and easier to ship.</p>
       </div>
-      <figure class="feature-media texture-media">
-        <img src="https://ubiservices.cdn.ubi.com/748afbe7-1d05-43d8-bf4b-9aff7d389b7a/news/texture_1.png" alt="Neural texture compression comparison from Ubisoft" loading="eager">
-        <figcaption>ASSASSIN'S CREED MIRAGE · UBISOFT</figcaption>
-        <div class="scanline"></div>
-      </figure>
+      <div class="title-stripe"><span>POWERFUL</span><span>BEAUTIFUL</span><span>SIMPLE</span><span>OPEN</span></div>
     </section>
 
-    <section class="slide slide-city" id="city-builder" data-index="2">
-      <div class="slide-copy">
-        <p class="eyebrow"><span>02</span> Creation tools</p>
-        <h1>Build a city.<br><em>Keep the joy.</em></h1>
-        <p class="lede">A procedural building and city-plan editor that accelerates layout without automating away creative decisions. Modular kits become fast, beautiful, shareable worlds.</p>
-        <div class="workflow">
-          <span>DRAW FOOTPRINT</span><b>→</b><span>APPLY KIT + RULES</span><b>→</b><span>SHARE THE SCENE</span>
-        </div>
-        <div class="deliverable"><b>DELIVERABLE</b><span>Online editor + JavaScript runtime</span></div>
-        <div class="actions">
-          <a class="source-link" href="https://www.artstation.com/artwork/rzEvxO" target="_blank" rel="noreferrer">View building generator <span>↗</span></a>
-          <span class="scope">BABYLON.JS · EDITOR</span>
-        </div>
-      </div>
-      <figure class="feature-media city-media">
-        <img src="https://cdna.artstation.com/p/assets/covers/images/100/274/012/large/richard-damien-richard-damien-mignaturebuilding.webp?1782383348" alt="Advanced procedural building generator by Damien Richard" loading="lazy">
-        <div class="blueprint-grid"></div>
-        <figcaption>ADVANCE BUILDING GENERATOR · DAMIEN RICHARD</figcaption>
-      </figure>
-    </section>
-
-    <section class="slide slide-rig" id="physics-rig" data-index="3">
-      <div class="ambient ambient-orange"></div>
-      <div class="slide-copy">
-        <p class="eyebrow"><span>03</span> Animation / Physics</p>
-        <h1>Rig once.<br><em>React forever.</em></h1>
-        <p class="lede">Author physicalized bones alongside animation: tails, hair strands, straps, backpacks. Movement gains weight and variation without hand-keying every response.</p>
-        <div class="callouts">
-          <div><b>AUTHOR</b><span>constraints, mass, damping</span></div>
-          <div><b>PREVIEW</b><span>animation + physics live</span></div>
-          <div><b>SHIP</b><span>runtime-ready rig data</span></div>
-        </div>
-        <div class="deliverable"><b>DELIVERABLE</b><span>Editor + glTF / .babylon export</span></div>
-        <div class="actions">
-          <span class="source-link static">EDITOR → RUNTIME</span>
-          <span class="scope">BABYLON.JS · TOOLING</span>
-        </div>
-      </div>
-      <div class="feature-media rig-visual" aria-label="Stylized physics rig diagram">
-        <svg viewBox="0 0 700 600" role="img" aria-label="Character rig with physical bones">
-          <defs>
-            <filter id="glow"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-          </defs>
-          <g class="ghost"><path d="M350 90c-47 0-85 38-85 85v118l-77 140 72 30 90-117 90 117 72-30-77-140V175c0-47-38-85-85-85Z"/></g>
-          <g class="bones">
-            <path d="M350 130v195M350 210l-94 86M350 210l94 86M350 325l-78 154M350 325l78 154"/>
-            <circle cx="350" cy="130" r="15"/><circle cx="350" cy="210" r="12"/><circle cx="350" cy="325" r="13"/>
-            <circle cx="256" cy="296" r="10"/><circle cx="444" cy="296" r="10"/><circle cx="272" cy="479" r="10"/><circle cx="428" cy="479" r="10"/>
-          </g>
-          <g class="dynamic" filter="url(#glow)">
-            <path d="M404 175c80 15 99 73 66 132s17 106 65 115"/>
-            <circle cx="404" cy="175" r="8"/><circle cx="470" cy="307" r="8"/><circle cx="535" cy="422" r="8"/>
-          </g>
-          <text x="474" y="278">DAMPING .42</text><text x="500" y="397">DYNAMIC CHAIN</text>
-        </svg>
-      </div>
-    </section>
-
-    <section class="slide slide-pcg" id="pcg-tools" data-index="4">
+    <section class="slide slide-pcg" id="pcg-tools" data-index="2">
       <div class="ambient ambient-green"></div>
       <div class="slide-copy">
-        <p class="eyebrow"><span>04</span> Procedural creation</p>
+        <p class="eyebrow"><span>02</span> Procedural creation</p>
         <h1>Rules in.<br><em>Worlds out.</em></h1>
-        <p class="lede">Scatter and shape scenes with readable rules—inside NGE or a focused editor. Compose placement, raycasts, splines, physics, and particles into a fast world-building loop.</p>
+        <p class="lede">Scatter and shape scenes with readable rules inside NGE or a focused editor. Compose placement, raycasts, splines, physics, and particles into a fast world-building loop.</p>
         <blockquote><code>instantiate(tree)</code><br><code>where hit.normal.y &gt; 0.72</code><br><code>with random.scale(0.8, 1.3)</code></blockquote>
         <div class="deliverable"><b>DELIVERABLE</b><span>NGE extension or custom tool + runtime</span></div>
         <div class="actions">
           <a class="source-link" href="https://babylonjs.com/lite-demos/demo-antigravity-racer.html" target="_blank" rel="noreferrer">Open spline demo <span>↗</span></a>
-          <span class="scope">BABYLON.JS + LITE</span>
+          <span class="impact"><b>1 / 5</b> Limited traction</span>
         </div>
       </div>
       <div class="feature-media pcg-visual" aria-label="Procedural scatter visualization">
@@ -140,49 +68,48 @@
           </svg>
           <i style="--x:9%;--y:55%;--s:.8"></i><i style="--x:18%;--y:32%;--s:1.1"></i><i style="--x:27%;--y:67%;--s:.7"></i>
           <i style="--x:38%;--y:43%;--s:1.3"></i><i style="--x:46%;--y:74%;--s:.9"></i><i style="--x:56%;--y:26%;--s:.75"></i>
-          <i style="--x:64%;--y:57%;--s:1.2"></i><i style="--x:73%;--y:36%;--s:.95"></i><i style="--x:82%;--y:68%;--s:1.1"></i>
-          <i style="--x:91%;--y:45%;--s:.8"></i>
+          <i style="--x:64%;--y:57%;--s:1.2"></i><i style="--x:73%;--y:36%;--s:.95"></i><i style="--x:82%;--y:68%;--s:1.1"></i><i style="--x:91%;--y:45%;--s:.8"></i>
         </div>
         <div class="node-chain" aria-hidden="true"><span>SOURCE</span><b>›</b><span>RAYCAST</span><b>›</b><span>FILTER</span><b>›</b><span>INSTANCE</span></div>
       </div>
     </section>
 
-    <section class="slide slide-browser" id="content-browser" data-index="5">
+    <section class="slide slide-browser" id="content-browser" data-index="3">
       <div class="slide-copy">
-        <p class="eyebrow"><span>05</span> AI-first scene creation</p>
+        <p class="eyebrow"><span>03</span> AI-first scene creation</p>
         <h1>Prompt it.<br><em>Then make it yours.</em></h1>
-        <p class="lede">Start by prompting a complete scene, then iterate with AI and tweak every result using familiar selection, placement, and gizmo tools. Asset packs keep generation coherent while standard editing keeps creators in control.</p>
+        <p class="lede">Prompt a complete scene, iterate with AI, then tweak every result using familiar selection, placement, and gizmo tools. Curated asset packs keep generation coherent while creators stay in control.</p>
         <div class="pill-row"><span>PROMPT A SCENE</span><span>ITERATE WITH AI</span><span>TWEAK WITH GIZMOS</span></div>
         <div class="deliverable"><b>DELIVERABLE</b><span>Inspector extension</span></div>
         <div class="actions">
           <span class="source-link static">SOURCE → SCENE</span>
-          <span class="scope">BABYLON.JS + LITE · EDITOR</span>
+          <span class="impact"><b>2 / 5</b> More scenes made</span>
         </div>
       </div>
       <figure class="feature-media browser-gallery">
         <img class="browser-gallery-main" src="assets/scene-builder.png" alt="Scene builder showing a modular sci-fi environment assembled with standard editor tools" loading="lazy">
-        <img src="assets/asset-pack-picker.png" alt="Asset pack picker with several themed content libraries" loading="lazy">
+        <img src="assets/asset-pack-picker.png" alt="Asset pack picker with themed content libraries" loading="lazy">
         <img src="assets/environment-probes.png" alt="Environment probe editor over the assembled sci-fi scene" loading="lazy">
         <figcaption>AI-FIRST GENERATION · STANDARD EDITOR CONTROL</figcaption>
       </figure>
     </section>
 
-    <section class="slide slide-destruction" id="mesh-destruction" data-index="6">
+    <section class="slide slide-destruction" id="mesh-destruction" data-index="4">
       <div class="ambient ambient-red"></div>
       <div class="slide-copy">
-        <p class="eyebrow"><span>06</span> Geometry / Impact</p>
+        <p class="eyebrow"><span>04</span> Geometry / Impact</p>
         <h1>Make every cut<br><em>matter.</em></h1>
-        <p class="lede">An editor to define destruction rules and preview them before runtime. Duplicate clipped geometry while preserving attributes—then turn a slice into a memorable interaction.</p>
+        <p class="lede">Define destruction rules and preview them before runtime. Duplicate clipped geometry while preserving attributes, then turn a slice into a memorable interaction.</p>
         <div class="pill-row"><span>CLIP</span><span>CAP</span><span>PRESERVE ATTRIBUTES</span><span>PREVIEW</span></div>
         <div class="deliverable"><b>DELIVERABLE</b><span>Runtime + demo examples</span></div>
         <div class="actions">
           <a class="source-link" href="https://babylonjs.com/lite-demos/demo-break-meshes.html" target="_blank" rel="noreferrer">Open Babylon Lite demo <span>↗</span></a>
-          <span class="scope">BABYLON.JS · EDITOR + RUNTIME</span>
+          <span class="impact"><b>3 / 5</b> Fun community demos</span>
         </div>
       </div>
       <div class="feature-media destruction-visual" aria-label="Mesh destruction preview">
         <div class="destruction-stage">
-          <img class="destruction-preview" src="assets/destruction-preview.png" alt="Destructible objects split into fragments in a Babylon scene">
+          <img class="destruction-preview" src="assets/destruction-preview.png" alt="Destructible objects split into fragments in a Babylon scene" loading="lazy">
           <figure class="fruit-gif">
             <img src="https://media1.giphy.com/media/l0ExaFmh2gdSywoFi/giphy.gif" alt="Fruit Ninja gameplay showing fruit slicing" loading="lazy">
             <figcaption>FRUIT NINJA · VIA GIPHY</figcaption>
@@ -192,31 +119,77 @@
       </div>
     </section>
 
-    <section class="slide slide-mesh" id="meshblend" data-index="7">
-      <div class="ambient ambient-gold"></div>
+    <section class="slide slide-rig" id="physics-rig" data-index="5">
+      <div class="ambient ambient-orange"></div>
       <div class="slide-copy">
-        <p class="eyebrow"><span>07</span> Rendering / Geometry</p>
-        <h1>Make the seam<br><em>disappear.</em></h1>
-        <p class="lede">MeshBlend has been on the list for years. Explore an SSAO-inspired screen-space neighborhood pass that blends nearby color instead of darkening intersections.</p>
-        <div class="split-features">
-          <div><b>INPUT</b><span>Intersecting meshes, mismatched color, visible placement seams.</span></div>
-          <div><b>RESULT</b><span>Grounded assets and softer transitions without hand-authored decals.</span></div>
+        <p class="eyebrow"><span>05</span> Animation / Physics</p>
+        <h1>Rig once.<br><em>React forever.</em></h1>
+        <p class="lede">Physicalize a full character or only selected bones: tails, hair, backpacks, vehicles, even robotics displays. Mix authored animation with dynamic motion where it matters.</p>
+        <div class="callouts">
+          <div><b>AUTHOR</b><span>constraints, mass, damping</span></div>
+          <div><b>PREVIEW</b><span>animation + physics live</span></div>
+          <div><b>SHIP</b><span>runtime-ready rig data</span></div>
         </div>
-        <div class="deliverable"><b>DELIVERABLE</b><span>Frame Graph rendering task</span></div>
+        <div class="deliverable"><b>DELIVERABLE</b><span>Editor + glTF / .babylon output</span></div>
         <div class="actions">
-          <a class="source-link" href="https://meshblend.lervik.com/" target="_blank" rel="noreferrer">Explore MeshBlend <span>↗</span></a>
-          <span class="scope">BABYLON.JS · R&amp;D</span>
+          <span class="source-link static">EDITOR → RUNTIME</span>
+          <span class="impact"><b>3 / 5</b> Dynamic animation</span>
         </div>
       </div>
-      <figure class="feature-media mesh-media">
-        <video src="https://meshblend.lervik.com/assets/MeshBlend_Rocks_compressed.VnsJ29k6.mp4" autoplay muted loop playsinline></video>
-        <figcaption>REFERENCE: MESHBLEND BY TORE LERVIK</figcaption>
-        <div class="blend-zone"><span>BLEND ZONE</span></div>
+      <figure class="feature-media framed-media rig-image">
+        <img src="assets/physicsRigEdit.webp" alt="Humanoid robot with an editable physics rig" loading="lazy">
+        <figcaption>FULL OR PARTIAL PHYSICS RIG AUTHORING</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide slide-neural" id="neural-textures" data-index="6">
+      <div class="ambient ambient-cyan"></div>
+      <div class="slide-copy">
+        <p class="eyebrow"><span>06</span> Rendering / AI research</p>
+        <h1>Neural texture<br><em>compression</em></h1>
+        <p class="lede">A neural texture stores learned latent data instead of final pixels. A lightweight decoder reconstructs material channels at runtime, trading texture memory for compact inference.</p>
+        <div class="neural-flow" aria-label="How neural textures work">
+          <div><b>01 / TRAIN</b><span>Learn shared material patterns.</span></div><i>→</i>
+          <div><b>02 / STORE</b><span>Keep latent data and weights.</span></div><i>→</i>
+          <div><b>03 / SHADE</b><span>Decode channels on the GPU.</span></div>
+        </div>
+        <div class="deliverable"><b>DELIVERABLE</b><span>CLI + lightweight JavaScript decoder</span></div>
+        <div class="actions">
+          <a class="source-link" href="https://www.ubisoft.com/fr-fr/news/ignt.58488/shipping-neural-texture-compression-in-assassin-s-creed-mirage" target="_blank" rel="noreferrer">Read Ubisoft research <span>↗</span></a>
+          <span class="impact"><b>3.5 / 5</b> AI expertise</span>
+        </div>
+      </div>
+      <figure class="feature-media texture-media">
+        <img src="https://ubiservices.cdn.ubi.com/748afbe7-1d05-43d8-bf4b-9aff7d389b7a/news/texture_1.png" alt="Neural texture compression comparison from Ubisoft" loading="lazy">
+        <figcaption>ASSASSIN'S CREED MIRAGE · UBISOFT</figcaption>
+        <div class="scanline"></div>
+      </figure>
+    </section>
+
+    <section class="slide slide-geometry" id="virtual-geometry" data-index="7">
+      <div class="ambient ambient-violet"></div>
+      <div class="slide-copy">
+        <p class="eyebrow"><span>07</span> Rendering / Geometry</p>
+        <h1>Stream detail.<br><em>Not limits.</em></h1>
+        <p class="lede">Bring a Nanite-like virtual geometry pipeline to the web. Convert complex meshes into streamable clusters, then load and display only the geometry needed for the current view.</p>
+        <div class="split-features">
+          <div><b>OFFLINE</b><span>Partition source meshes into compact, streamable geometry data.</span></div>
+          <div><b>RUNTIME</b><span>Select, stream, and render the right detail on demand.</span></div>
+        </div>
+        <div class="deliverable"><b>DELIVERABLE</b><span>CLI converter + streaming runtime</span></div>
+        <div class="actions">
+          <span class="source-link static">CONVERT → STREAM → DISPLAY</span>
+          <span class="impact"><b>4 / 5</b> Complex web geometry</span>
+        </div>
+      </div>
+      <figure class="feature-media framed-media geometry-image">
+        <img src="assets/meshlets.png" alt="Complex statue partitioned into colored geometry clusters" loading="lazy">
+        <figcaption>VIRTUAL GEOMETRY · STREAMABLE CLUSTERS</figcaption>
       </figure>
     </section>
   </main>
 
-  <footer class="hint"><span>SCROLL / ARROWS</span><i></i><span>7 IDEAS · 1 YEAR</span></footer>
+  <footer class="hint"><span>SCROLL / ARROWS</span><i></i><span>6 IDEAS · 2026</span></footer>
   <script src="script.js"></script>
 </body>
 </html>
