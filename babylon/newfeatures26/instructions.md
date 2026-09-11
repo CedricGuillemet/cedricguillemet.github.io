@@ -13,6 +13,7 @@ Produce a polished, persuasive dark-theme HTML presentation for Babylon.js and B
 - Re-read `features.md` on every refresh and incorporate additions to existing ideas, including any newly supplied demos or requested media.
 - Give every feature a short headline, a concise explanation, a tangible prototype/demo proposal, and the expected value.
 - Treat each `output:` line as the required deliverable for the preceding idea. Show it prominently and consistently on that feature page; do not paraphrase away implementation-specific terms such as CLI, NGE, Inspector, runtime, or Frame Graph.
+- Treat each `impact:` line as a required expected-impact statement. Show both its score and its complete rationale in a visually prominent, consistently styled callout that is clearly distinct from the deliverable.
 - Follow every source link before writing. Use its title, description, visual media, and technical claims accurately.
 - Correct malformed source URLs when the intended page is unambiguous, but do not invent sources or quantitative claims.
 - Attribute third-party media visibly and link to the original source. Prefer embedding publisher-hosted media over copying it into the repository.
@@ -24,6 +25,7 @@ Produce a polished, persuasive dark-theme HTML presentation for Babylon.js and B
 - Dark, high-contrast theme with a restrained accent color unique to each feature.
 - Editorial typography, large headlines, generous whitespace, fine grid lines, and compact monospace metadata.
 - Each page needs one dominant visual: embedded video, source image, technical diagram, editor mockup, or animated CSS illustration.
+- Frame supplied images without cropping or distortion. Preserve their intrinsic aspect ratio with `object-fit: contain`, and size the frame so the entire image and its attribution remain visible within the slide viewport.
 - Keep a consistent fixed header, slide counter, navigation rail, and presentation hint.
 - Design for 16:9 projection first, then adapt cleanly to tablet and mobile widths.
 - Honor `prefers-reduced-motion`.
@@ -45,7 +47,8 @@ Before finishing:
 
 1. Confirm the number of feature pages matches the interpreted source list.
 2. Open the deck at desktop and mobile widths and check that no text or controls are clipped.
-3. Test all navigation methods and fullscreen mode.
-4. Verify every external media URL and source link.
-5. Confirm every third-party visual has visible attribution.
-6. Check the browser console for errors.
+3. Confirm every supplied image is fully visible, uncropped, and displayed at its original aspect ratio.
+4. Test all navigation methods and fullscreen mode.
+5. Verify every external media URL and source link.
+6. Confirm every third-party visual has visible attribution.
+7. Check the browser console for errors.

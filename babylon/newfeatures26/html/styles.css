@@ -72,8 +72,11 @@ h1 em { color: var(--accent); font-style: normal; font-weight: 300; }
 a.source-link:hover { color: var(--accent); }
 .source-link.static { color: var(--muted); }
 .scope { color: var(--accent); font: 10px Consolas, monospace; letter-spacing: .1em; text-align: right; }
-.impact { color: var(--muted); font: 9px Consolas, monospace; letter-spacing: .07em; text-align: right; text-transform: uppercase; }
-.impact b { display: block; margin-bottom: 5px; color: var(--accent); font-size: 13px; }
+.impact { position: relative; width: min(310px, 44%); min-width: 230px; display: grid; grid-template-columns: 1fr auto; gap: 5px 16px; padding: 12px 14px 15px; overflow: hidden; border: 1px solid color-mix(in srgb, var(--accent) 48%, transparent); background: color-mix(in srgb, var(--accent) 10%, rgba(9,7,20,.65)); font-family: Consolas, monospace; text-transform: uppercase; }
+.impact::after { content: ""; position: absolute; left: 0; bottom: 0; width: var(--score); height: 4px; background: var(--accent); box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 70%, transparent); }
+.impact span { align-self: center; color: var(--accent); font-size: 8px; font-weight: 700; letter-spacing: .14em; }
+.impact b { grid-row: 1 / 3; grid-column: 2; align-self: center; color: var(--ink); font-size: 25px; line-height: 1; letter-spacing: -.06em; }
+.impact strong { max-width: 190px; color: var(--ink); font-size: 9px; font-weight: 500; line-height: 1.35; letter-spacing: .035em; }
 .feature-media { position: relative; z-index: 1; min-width: 0; }
 .feature-media img, .feature-media video { display: block; width: 100%; }
 .feature-media figcaption { position: absolute; left: 0; bottom: -24px; color: var(--muted); font: 9px Consolas, monospace; letter-spacing: .12em; }
@@ -131,8 +134,8 @@ a.source-link:hover { color: var(--accent); }
 .dynamic { fill: var(--accent); stroke: var(--accent); stroke-width: 4; fill-opacity: .9; }
 .rig-visual text { fill: var(--accent); font: 11px Consolas, monospace; letter-spacing: .08em; }
 .framed-media { height: min(68vh, 650px); display: grid; place-items: center; padding: 12px; border: 1px solid var(--line); background: rgba(9,7,20,.35); box-shadow: 0 40px 100px rgba(0,0,0,.4); }
-.framed-media img { width: 100%; height: 100%; object-fit: contain; }
-.rig-image img { object-fit: cover; }
+.framed-media img { width: auto; height: auto; min-height: 0; max-width: 100%; max-height: 100%; object-fit: contain; }
+.rig-image img { object-fit: contain; }
 
 .slide-pcg { --accent: #70f5aa; }
 blockquote { margin: 0; padding: 17px 20px; border-left: 2px solid var(--accent); background: rgba(112,245,170,.04); color: #c8f9da; font: 12px/1.7 Consolas, monospace; }
@@ -205,17 +208,20 @@ blockquote { margin: 0; padding: 17px 20px; border-left: 2px solid var(--accent)
   .deliverable { gap: 7px; margin-top: 12px; padding: 6px 8px 6px 6px; }
   .deliverable span { font-size: 8px; }
   .scope { display: none; }
-  .impact { max-width: 130px; }
+  .impact { width: min(240px, 52%); min-width: 0; padding: 9px 10px 12px; }
+  .impact b { font-size: 19px; }
+  .impact strong { font-size: 7px; }
   .callouts { grid-template-columns: 1fr 1fr 1fr; }.callouts div { padding: 8px; }.callouts span { font-size: 8px; }
   .browser-gallery { grid-template-columns: 2fr 1fr; gap: 5px; }
   .slide-browser { gap: 12px; }
   .slide-browser h1 { font-size: clamp(38px, 11.5vw, 54px); }
   .slide-browser .browser-gallery { height: 26vh; }
-  .slide-pcg, .slide-rig, .slide-geometry { gap: 10px; }
-  .slide-pcg .pcg-visual { height: 30vh; }
-  .slide-pcg .terrain { height: calc(30vh - 109px); }
+  .slide-pcg, .slide-rig, .slide-destruction, .slide-geometry { gap: 10px; }
+  .slide-pcg .pcg-visual { height: 29vh; }
+  .slide-pcg .terrain { height: calc(29vh - 109px); }
+  .slide-destruction .destruction-visual { height: 34vh; }
   .slide-rig .framed-media { height: 30vh; }
-  .slide-geometry .framed-media { height: 25vh; }
+  .slide-geometry .framed-media { height: 23vh; }
   .slide-geometry h1 { font-size: clamp(38px, 11.5vw, 54px); }
   .title-slide { padding: 70px 22px 36px; }
   .hero-mark { width: 75px; height: 87px; margin-bottom: 18px; }
