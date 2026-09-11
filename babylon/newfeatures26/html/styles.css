@@ -151,11 +151,10 @@ blockquote { margin: 0; padding: 17px 20px; border-left: 2px solid var(--accent)
 .terrain i::before { content: ""; position: absolute; left: 50%; top: -23px; width: 40px; height: 52px; border-radius: 60% 20% 55% 25%; background: #3b8b59; transform: translateX(-50%) rotate(45deg); box-shadow: 0 0 20px rgba(112,245,170,.2); }
 .node-chain { height: 64px; display: flex; align-items: center; justify-content: center; gap: 9px; font: 9px Consolas, monospace; }
 .node-chain span { padding: 8px; border: 1px solid rgba(112,245,170,.25); background: #13241a; }.node-chain b { color: var(--accent); }
+.pcg-video video { width: auto; height: auto; min-height: 0; max-width: 100%; max-height: 100%; object-fit: contain; }
 
 .slide-browser { --accent: #48a7ff; }
-.browser-gallery { display: grid; grid-template-columns: minmax(0, 2.35fr) minmax(120px, 1fr); grid-template-rows: 1fr 1fr; gap: 10px; height: min(68vh, 650px); }
-.browser-gallery img { width: 100%; height: 100%; min-height: 0; object-fit: cover; border: 1px solid var(--line); box-shadow: 0 24px 70px rgba(0,0,0,.4); }
-.browser-gallery .browser-gallery-main { grid-row: 1 / 3; object-position: center; }
+.browser-single img { box-shadow: 0 24px 70px rgba(0,0,0,.4); }
 
 .slide-destruction { --accent: #ff6678; }
 .destruction-visual { height: min(66vh, 640px); }
@@ -192,7 +191,7 @@ blockquote { margin: 0; padding: 17px 20px; border-left: 2px solid var(--accent)
   .rig-visual { height: 38vh; }
   .framed-media { height: 40vh; }
   .destruction-visual { height: 38vh; }
-  .pcg-visual, .browser-gallery { min-height: 0; height: 40vh; }
+  .pcg-visual, .pcg-video, .browser-single { min-height: 0; height: 40vh; }
   .terrain { height: calc(40vh - 109px); }
 }
 
@@ -212,13 +211,12 @@ blockquote { margin: 0; padding: 17px 20px; border-left: 2px solid var(--accent)
   .impact b { font-size: 19px; }
   .impact strong { font-size: 7px; }
   .callouts { grid-template-columns: 1fr 1fr 1fr; }.callouts div { padding: 8px; }.callouts span { font-size: 8px; }
-  .browser-gallery { grid-template-columns: 2fr 1fr; gap: 5px; }
   .slide-browser { gap: 12px; }
   .slide-browser h1 { font-size: clamp(38px, 11.5vw, 54px); }
-  .slide-browser .browser-gallery { height: 26vh; }
+  .slide-browser .browser-single { height: 26vh; }
   .slide-pcg, .slide-rig, .slide-destruction, .slide-geometry { gap: 10px; }
-  .slide-pcg .pcg-visual { height: 29vh; }
-  .slide-pcg .terrain { height: calc(29vh - 109px); }
+  .slide-pcg .pcg-visual, .slide-pcg .pcg-video { height: 26vh; }
+  .slide-pcg .terrain { height: calc(26vh - 109px); }
   .slide-destruction .destruction-visual { height: 34vh; }
   .slide-rig .framed-media { height: 30vh; }
   .slide-geometry .framed-media { height: 23vh; }

@@ -1,10 +1,11 @@
 
 \- PCG tools :  scattering, fast scene creation. define rules (yet another editor or more features of NGE) and apply these rules. like 'instanciate these mesh with a raycast if normal.y > threshold'. Add physics, particles,... spline edit (see https://babylonjs.com/lite-demos/demo-antigravity-racer.html track spline editor)
+Use `html/assets/trackedit.mp4`
 
 output: NGE extension or custom tool + runtime
 impact: 1/5 Limited traction. Community.
 
-\- AI-first content browser (asset source browser and scene creation tool). Start by prompting a complete scene, then iterate with AI and tweak the result using standard selection, placement, and gizmo tools. Have asset sources (Babylon, asset packs, community libraries, local folders) to keep generation coherent. Create and refine a kitbashed scene (add environment, meshes, probes, and scripts) while keeping creators in control. Use `html/assets/scene-builder.png`, `html/assets/asset-pack-picker.png`, and `html/assets/environment-probes.png`.
+\- AI-first content browser (asset source browser and scene creation tool). Start by prompting a complete scene, then iterate with AI and tweak the result using standard selection, placement, and gizmo tools. Have asset sources (Babylon, asset packs, community libraries, local folders) to keep generation coherent. Create and refine a kitbashed scene (add environment, meshes, probes, and scripts) while keeping creators in control. Use `html/assets/scene-builder.png`
 
 output: inspector extension
 impact: 2/5 Easier scenes creation for community and marketing
